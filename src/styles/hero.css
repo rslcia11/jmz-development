@@ -1,4 +1,8 @@
 ﻿.hero {
+  position: relative;
+  isolation: isolate;
+  /* Clips the system graphic's trace line at the section edge. */
+  overflow: hidden;
   min-height: min(52rem, calc(100svh - var(--header-height)));
   display: flex;
   align-items: center;
@@ -6,9 +10,22 @@
 }
 
 .hero__inner {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: center;
+  gap: var(--layout-grid-gap-desktop);
+}
+
+.hero__content {
+  grid-column: 1 / span 7;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+.hero__visual {
+  position: relative;
+  grid-column: 8 / -1;
 }
 
 .hero__eyebrow {
@@ -77,6 +94,30 @@
 .hero__secondary-action:focus-visible {
   translate: 0 -2px;
   border-color: var(--color-text-muted);
+}
+
+/* Shares the row with the system graphic, so the statement scales down a step. */
+@media (min-width: 64rem) {
+  .hero__title {
+    font-size: var(--text-display-md);
+  }
+}
+
+@media (max-width: 63.99rem) {
+  .hero__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-16);
+  }
+
+  .hero__content,
+  .hero__visual {
+    grid-column: 1 / -1;
+  }
+
+  .hero__visual {
+    width: min(100%, 22rem);
+    justify-self: center;
+  }
 }
 
 @media (max-width: 47.99rem) {

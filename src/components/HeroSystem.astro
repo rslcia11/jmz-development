@@ -1,0 +1,152 @@
+---
+/*
+  JMZ signature graphic (master plan §15, §19): scattered modules assemble into
+  a connected system, and the core's output line continues into the next
+  section. The markup IS the assembled final state; the script only animates
+  the journey there, so no-JS and reduced-motion users see the finished system.
+
+  Layout: 3×3 grid on a 400×400 viewBox, 96px cells, 24px gaps. The empty
+  bottom-middle cell is the channel the core's output line runs through.
+  `from` is each module's designed (not random) starting offset: [x, y, rotate].
+*/
+interface Module {
+  label: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  from: [number, number, number];
+  core?: boolean;
+}
+
+const modules: Module[] = [
+  { label: "context", x: 32, y: 32, w: 216, h: 96, from: [-56, -40, -8] },
+  { label: "users", x: 272, y: 32, w: 96, h: 96, from: [48, -56, 12] },
+  { label: "process", x: 32, y: 152, w: 96, h: 96, from: [-72, 16, -14] },
+  { label: "core", x: 152, y: 152, w: 96, h: 96, from: [0, 32, 45], core: true },
+  { label: "data", x: 272, y: 152, w: 96, h: 216, from: [64, 36, 10] },
+  { label: "automation", x: 32, y: 272, w: 96, h: 96, from: [-40, 64, -10] },
+];
+
+// Blueprint guides along the grid's cell edges.
+const guides = [32, 152, 248, 368];
+
+// Connections bridge the 24px gaps between neighbouring modules.
+const links: [number, number, number, number][] = [
+  [80, 128, 80, 152],
+  [200, 128, 200, 152],
+  [320, 128, 320, 152],
+  [128, 200, 152, 200],
+  [248, 200, 272, 200],
+  [80, 248, 80, 272],
+];
+
+// The core's output, exiting through the empty channel to the bottom edge.
+const output = [200, 248, 200, 400];
+---
+
+<svg class="hero-system" viewBox="0 0 400 400" fill="none" aria-hidden="true" focusable="false">
+  {guides.map((at) => (
+    <>
+      <line class="hero-system__guide" x1={at} y1="0" x2={at} y2="400" />
+      <line class="hero-system__guide" x1="0" y1={at} x2="400" y2={at} />
+    </>
+  ))}
+
+  {links.map(([x1, y1, x2, y2]) => (
+    <line class="hero-system__link" x1={x1} y1={y1} x2={x2} y2={y2} />
+  ))}
+
+  <line
+    class="hero-system__link hero-system__output"
+    x1={output[0]}
+    y1={output[1]}
+    x2={output[2]}
+    y2={output[3]}
+  />
+
+  {links.map(([x1, y1, x2, y2]) => (
+    <circle class="hero-system__node" cx={(x1 + x2) / 2} cy={(y1 + y2) / 2} r="3" />
+  ))}
+
+  {modules.map(({ label, x, y, w, h, from, core }) => (
+    <g
+      class:list={["hero-system__module", { "hero-system__module--core": core }]}
+      data-from={from.join(" ")}
+    >
+      <rect x={x} y={y} width={w} height={h} rx="2" />
+      <text x={x + 12} y={y + 20}>{label}</text>
+      {core && <rect class="hero-system__accent" x={x + w - 24} y={y + h - 24} width="12" height="12" />}
+    </g>
+  ))}
+</svg>
+<span class="hero-system__trace" aria-hidden="true"></span>
+
+<script>
+  import { animate, createTimeline, onScroll, stagger, svg, utils } from "animejs";
+
+  const root = document.querySelector<SVGSVGElement>(".hero-system");
+  const trace = document.querySelector<HTMLElement>(".hero-system__trace");
+  // Scroll range = whichever section hosts the graphic; no parent class coupling.
+  const section = root?.closest("section");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (root && trace && section && !reduceMotion) {
+    const modules = root.querySelectorAll<SVGGElement>(".hero-system__module");
+    const from = (target: unknown, axis: number) =>
+      Number((target as SVGGElement).dataset.from?.split(" ")[axis] ?? 0);
+    const guides = svg.createDrawable(".hero-system__guide");
+    const links = svg.createDrawable(".hero-system__link");
+
+    // Starting state: undrawn lines, hidden nodes/accent, modules at their offsets.
+    utils.set([...guides, ...links], { draw: "0 0" });
+    utils.set(".hero-system__node, .hero-system__accent", { scale: 0 });
+    utils.set(modules, {
+      x: (target) => from(target, 0),
+      y: (target) => from(target, 1),
+      rotate: (target) => from(target, 2),
+      scale: 0.92,
+      opacity: 0,
+    });
+    root.classList.add("is-ready");
+
+    // complexity → understanding → system → solution (§19).
+    const assembly = createTimeline({ autoplay: false, defaults: { ease: "outExpo" } })
+      .add(guides, { draw: "0 1", duration: 1200, ease: "inOutQuad" }, stagger(50))
+      .add(
+        modules,
+        { x: 0, y: 0, rotate: 0, scale: 1, opacity: 1, duration: 1400 },
+        stagger(80, { start: 400 }),
+      )
+      .add(links, { draw: "0 1", duration: 700, ease: "inOutQuad" }, stagger(60, { start: 1300 }))
+      .add(".hero-system__node", { scale: 1, duration: 500 }, stagger(40, { start: 1700 }))
+      .add(".hero-system__accent", { scale: 1, duration: 900 }, 2100);
+
+    // On narrow screens the graphic sits below the fold: assemble when it's
+    // actually seen. On desktop it's in view at load, so this fires at once.
+    const inView = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          assembly.play();
+          inView.disconnect();
+        }
+      },
+      { threshold: 0.25 },
+    );
+    inView.observe(root);
+
+    // Stage 6: while the section scrolls away, the core's output line extends
+    // down to the next section and the system drifts up slightly.
+    const heroScroll = () =>
+      onScroll({
+        target: section,
+        enter: { container: "top", target: "top" },
+        leave: { container: "top", target: "bottom" },
+        sync: true,
+      });
+
+    // Same drift on both so the output line and the trace stay joined.
+    animate(trace, { scaleY: [0, 1], y: [0, -32], ease: "linear", autoplay: heroScroll() });
+    animate(root, { y: [0, -32], ease: "linear", autoplay: heroScroll() });
+  }
+</script>
