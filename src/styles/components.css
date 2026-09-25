@@ -1,15 +1,18 @@
-﻿.site-header {
-  position: relative;
+.site-header {
+  position: sticky;
+  top: 0;
   z-index: var(--z-navigation);
   width: 100%;
   border-bottom: 1px solid var(--color-border-subtle);
+  /* Near-opaque instead of backdrop-filter: no per-frame blur while scrolling. */
+  background: color-mix(in srgb, var(--color-bg-primary) 94%, transparent);
 }
 
 .site-nav {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  min-height: 5rem;
+  min-height: var(--header-height);
   gap: var(--space-6);
 }
 
@@ -46,6 +49,31 @@
   color: var(--color-text-primary);
 }
 
+/* Shared pill for the menu open/close controls (44px touch target). */
+.site-nav__toggle,
+.mobile-menu__close {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding-inline: var(--space-5);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-full);
+  color: var(--color-text-primary);
+  font-size: var(--text-body-sm);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-standard);
+}
+
+.site-nav__toggle:hover,
+.mobile-menu__close:hover {
+  border-color: var(--color-text-muted);
+}
+
+.site-nav__toggle {
+  display: none;
+  justify-self: end;
+}
+
 @media (max-width: 47.99rem) {
   .site-nav {
     grid-template-columns: 1fr auto;
@@ -53,5 +81,14 @@
 
   .site-nav__links {
     display: none;
+  }
+
+  /* With JS the menu replaces the inline CTA; without it the CTA stays. */
+  .js .site-nav__cta {
+    display: none;
+  }
+
+  .js .site-nav__toggle {
+    display: inline-flex;
   }
 }

@@ -59,14 +59,28 @@
   font-size: var(--text-body-sm);
   transition:
     color var(--duration-fast) var(--ease-standard),
-    transform var(--duration-fast) var(--ease-emphasized);
+    translate var(--duration-fast) var(--ease-emphasized);
 }
 
 .site-footer__contact a:hover,
+.site-footer__contact a:focus-visible,
 .site-footer__links a:hover,
-.site-footer__social a:hover {
+.site-footer__links a:focus-visible,
+.site-footer__social a:hover,
+.site-footer__social a:focus-visible {
   color: var(--color-text-primary);
-  transform: translateX(2px);
+}
+
+/* Opt-in nudge: only applied when motion is welcome, so no override fight. */
+@media (prefers-reduced-motion: no-preference) {
+  .site-footer__contact a:hover,
+  .site-footer__contact a:focus-visible,
+  .site-footer__links a:hover,
+  .site-footer__links a:focus-visible,
+  .site-footer__social a:hover,
+  .site-footer__social a:focus-visible {
+    translate: 2px 0;
+  }
 }
 
 .site-footer__bottom {

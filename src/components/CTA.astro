@@ -1,4 +1,8 @@
-﻿<section class="cta" id="contact" aria-labelledby="cta-title">
+﻿---
+import { contactEmail } from "../data/navigation";
+---
+
+<section class="cta" id="contact" aria-labelledby="cta-title">
   <div class="cta__inner container">
     <p class="cta__eyebrow">05 — Start a conversation</p>
 
@@ -13,7 +17,7 @@
       necesitas llevar tu tecnología.
     </p>
 
-    <a class="cta__action" href="mailto:hello@jmzdevelopment.com">
+    <a class="cta__action" href={`mailto:${contactEmail}`}>
       Hablemos <span aria-hidden="true">→</span>
     </a>
   </div>

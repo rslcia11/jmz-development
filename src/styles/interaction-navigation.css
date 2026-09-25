@@ -17,12 +17,14 @@
 }
 
 .site-nav__links a:hover,
-.site-nav__links a:focus-visible {
+.site-nav__links a:focus-visible,
+.site-nav__links a[aria-current] {
   color: var(--color-text-primary);
 }
 
 .site-nav__links a:hover::after,
-.site-nav__links a:focus-visible::after {
+.site-nav__links a:focus-visible::after,
+.site-nav__links a[aria-current]::after {
   transform: scaleX(1);
   transform-origin: left center;
 }

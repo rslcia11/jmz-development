@@ -1,17 +1,125 @@
-﻿<header class="site-header">
+---
+import { allLinks, contactEmail, contactLink, sectionLinks } from "../data/navigation";
+---
+
+<header class="site-header">
   <nav class="site-nav container" aria-label="Navegación principal">
     <a class="site-nav__brand" href="/" aria-label="JMZ Development & Solutions — Inicio">
       JMZ
     </a>
 
-    <div class="site-nav__links">
-      <a href="#services">Servicios</a>
-      <a href="#work">Proyectos</a>
-      <a href="#about">Nosotros</a>
-    </div>
+    <ul class="site-nav__links" role="list">
+      {sectionLinks.map(({ href, label }) => (
+        <li>
+          <a href={href}>{label}</a>
+        </li>
+      ))}
+    </ul>
 
-    <a class="site-nav__cta" href="#contact">
-      Hablemos
+    <a class="site-nav__cta" href={contactLink.href}>
+      {contactLink.label}
     </a>
+
+    <button
+      class="site-nav__toggle"
+      type="button"
+      aria-haspopup="dialog"
+      aria-controls="mobile-menu"
+      data-menu-open
+    >
+      Menú
+    </button>
   </nav>
 </header>
+
+<!--
+  Native modal <dialog>: showModal() gives focus trapping, an inert page
+  behind it, ESC to close and focus restoration to the toggle for free.
+-->
+<dialog class="mobile-menu" id="mobile-menu" aria-label="Menú">
+  <div class="mobile-menu__inner container">
+    <div class="mobile-menu__bar">
+      <span class="site-nav__brand" aria-hidden="true">JMZ</span>
+
+      <button class="mobile-menu__close" type="button" data-menu-close>
+        Cerrar
+      </button>
+    </div>
+
+    <ol class="mobile-menu__links" role="list">
+      {allLinks.map(({ href, label }, index) => (
+        <li style={`--i: ${index}`}>
+          <a href={href} data-menu-link>
+            <span class="mobile-menu__index" aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            {label}
+          </a>
+        </li>
+      ))}
+    </ol>
+
+    <a class="mobile-menu__email" href={`mailto:${contactEmail}`}>
+      {contactEmail}
+    </a>
+  </div>
+</dialog>
+
+<script>
+  const menu = document.querySelector<HTMLDialogElement>("#mobile-menu");
+  const openButton = document.querySelector<HTMLButtonElement>("[data-menu-open]");
+
+  if (menu && openButton) {
+    openButton.addEventListener("click", () => menu.showModal());
+
+    // Closing before the link's default action lets the anchor scroll run
+    // on an unlocked page.
+    menu.addEventListener("click", (event) => {
+      if ((event.target as Element).closest("[data-menu-close], [data-menu-link]")) {
+        menu.close();
+      }
+    });
+
+    // The toggle disappears at the desktop breakpoint; don't leave the menu stranded open.
+    window.matchMedia("(min-width: 48rem)").addEventListener("change", (event) => {
+      if (event.matches) menu.close();
+    });
+  }
+
+  // Scroll-spy: mark the section crossing the middle of the viewport.
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>(".site-nav__links a");
+  const linkBySection = new Map<Element, HTMLAnchorElement>();
+
+  navLinks.forEach((link) => {
+    const section = document.getElementById(link.hash.slice(1));
+    if (section) linkBySection.set(section, link);
+  });
+
+  let current: HTMLAnchorElement | undefined;
+
+  const spy = new IntersectionObserver(
+    (entries) => {
+      // Handle leaving sections first so an enter in the same batch wins.
+      const ordered = [...entries].sort(
+        (a, b) => Number(a.isIntersecting) - Number(b.isIntersecting),
+      );
+
+      for (const entry of ordered) {
+        const link = linkBySection.get(entry.target);
+
+        if (entry.isIntersecting) {
+          current?.removeAttribute("aria-current");
+          link?.setAttribute("aria-current", "location");
+          current = link;
+        } else if (link === current) {
+          link?.removeAttribute("aria-current");
+          current = undefined;
+        }
+      }
+    },
+    // A 1% band at mid-viewport: at most one contiguous section crosses it.
+    { rootMargin: "-49% 0px -50% 0px" },
+  );
+
+  linkBySection.forEach((_, section) => spy.observe(section));
+</script>
