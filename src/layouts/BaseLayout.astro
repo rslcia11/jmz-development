@@ -1,0 +1,67 @@
+﻿---
+import "../styles/global.css";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "JMZ Development & Solutions",
+  description = "Tecnología, software, automatización e inteligencia artificial.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0b0b0a" />
+    <title>{title}</title>
+
+    <!--
+      Reveal styles only hide content under .motion-ready. Setting it inline,
+      before first paint, avoids a flash of visible content, and without JS the
+      class never exists so every section stays readable.
+    -->
+    <script is:inline>
+      document.documentElement.classList.add("motion-ready");
+    </script>
+  </head>
+
+  <body>
+    <Navigation />
+    <slot />
+    <Footer />
+
+    <script>
+      // The hero animates on load (hero-motion.css), so it's not observed.
+      const sections = document.querySelectorAll("body > section:not(.hero)");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        // A ratio threshold is relative to the section's own height, so a tall
+        // section (Work on mobile) may never reach it and stay hidden. Trigger
+        // on first contact instead; rootMargin sets how far into view that is.
+        {
+          threshold: 0,
+          rootMargin: "0px 0px -8% 0px",
+        },
+      );
+
+      sections.forEach((section) => observer.observe(section));
+    </script>
+  </body>
+</html>
+
