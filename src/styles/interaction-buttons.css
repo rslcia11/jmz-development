@@ -1,0 +1,54 @@
+/*
+  Primary buttons: the ::before layer sweeps the hover color in, so the base
+  background must stay put. Lift and press use the individual `translate` /
+  `scale` properties so they never fight a reveal `transform` on the same element.
+*/
+.hero__primary-action,
+.cta__action {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero__primary-action::before,
+.cta__action::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background: var(--color-brand-hover);
+  transform: translateY(101%);
+  transition: transform 450ms var(--ease-emphasized);
+}
+
+.hero__primary-action:hover::before,
+.hero__primary-action:focus-visible::before,
+.cta__action:hover::before,
+.cta__action:focus-visible::before {
+  transform: translateY(0);
+}
+
+.hero__primary-action:hover,
+.hero__primary-action:focus-visible,
+.cta__action:hover,
+.cta__action:focus-visible {
+  translate: 0 -2px;
+}
+
+.hero__primary-action:active,
+.cta__action:active {
+  translate: 0 0;
+  scale: 0.98;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__primary-action::before,
+  .cta__action::before {
+    transition: none;
+  }
+
+  .hero__primary-action:active,
+  .cta__action:active {
+    scale: none;
+  }
+}

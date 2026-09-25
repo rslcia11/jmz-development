@@ -1,0 +1,36 @@
+﻿:root {
+  --duration-instant: 100ms;
+  --duration-fast: 180ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 800ms;
+  --duration-reveal: 1000ms;
+
+  --ease-linear: linear;
+  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+}
+
+.motion-ready body > section:not(.hero) {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--duration-reveal) var(--ease-emphasized),
+    transform var(--duration-reveal) var(--ease-emphasized);
+}
+
+.motion-ready body > section:not(.hero).is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-ready body > section:not(.hero),
+  .motion-ready body > section:not(.hero).is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

@@ -1,0 +1,43 @@
+.motion-ready .about__intro,
+.motion-ready .about__signal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 900ms var(--ease-emphasized),
+    transform 1100ms var(--ease-emphasized);
+}
+
+.about.is-visible .about__intro {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about.is-visible .about__signal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about.is-visible .about__signal:nth-child(1) {
+  transition-delay: 120ms;
+}
+
+.about.is-visible .about__signal:nth-child(2) {
+  transition-delay: 240ms;
+}
+
+.about.is-visible .about__signal:nth-child(3) {
+  transition-delay: 360ms;
+}
+
+.about.is-visible .about__signal:nth-child(4) {
+  transition-delay: 480ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-ready .about__intro,
+  .motion-ready .about__signal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
