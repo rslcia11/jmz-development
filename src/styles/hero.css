@@ -1,5 +1,5 @@
 ﻿.hero {
-  min-height: min(52rem, calc(100svh - 5rem));
+  min-height: min(52rem, calc(100svh - var(--header-height)));
   display: flex;
   align-items: center;
   padding-block: var(--space-24);
@@ -81,7 +81,7 @@
 
 @media (max-width: 47.99rem) {
   .hero {
-    min-height: calc(100svh - 5rem);
+    min-height: calc(100svh - var(--header-height));
     padding-block: var(--space-16);
   }
 

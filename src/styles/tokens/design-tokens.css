@@ -59,6 +59,7 @@
 
 :root {
   --layout-max-width: 80rem;
+  --header-height: 5rem;
   --layout-text-max-width: 38rem;
 
   --layout-gutter-mobile: var(--space-5);

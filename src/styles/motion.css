@@ -13,7 +13,7 @@
   --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
 }
 
-.motion-ready body > section:not(.hero) {
+.motion-ready main > section:not(.hero) {
   opacity: 0;
   transform: translateY(24px);
   transition:
@@ -21,14 +21,14 @@
     transform var(--duration-reveal) var(--ease-emphasized);
 }
 
-.motion-ready body > section:not(.hero).is-visible {
+.motion-ready main > section:not(.hero).is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .motion-ready body > section:not(.hero),
-  .motion-ready body > section:not(.hero).is-visible {
+  .motion-ready main > section:not(.hero),
+  .motion-ready main > section:not(.hero).is-visible {
     opacity: 1;
     transform: none;
     transition: none;

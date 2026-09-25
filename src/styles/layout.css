@@ -1,4 +1,33 @@
-﻿.container {
+﻿/* Anchor targets land below the sticky header instead of under it. */
+html {
+  scroll-padding-top: var(--header-height);
+}
+
+/* Skip target: focus moves here programmatically, no ring around the page. */
+#main:focus {
+  outline: none;
+}
+
+.skip-link {
+  position: fixed;
+  top: var(--space-4);
+  left: var(--space-4);
+  z-index: calc(var(--z-navigation) + 1);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-full);
+  background: var(--color-brand);
+  color: var(--color-bg-primary);
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-medium);
+  translate: 0 calc(-100% - var(--space-8));
+  transition: translate var(--duration-fast) var(--ease-emphasized);
+}
+
+.skip-link:focus {
+  translate: 0 0;
+}
+
+.container {
   width: min(100% - (2 * var(--layout-gutter-mobile)), var(--layout-max-width));
   margin-inline: auto;
 }

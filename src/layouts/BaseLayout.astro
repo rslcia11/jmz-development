@@ -18,29 +18,33 @@ const {
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0b0b0a" />
     <title>{title}</title>
 
     <!--
-      Reveal styles only hide content under .motion-ready. Setting it inline,
-      before first paint, avoids a flash of visible content, and without JS the
-      class never exists so every section stays readable.
+      Set inline, before first paint. .motion-ready gates reveal styles (no
+      flash of visible content); .js swaps no-JS fallbacks such as the mobile
+      nav CTA for the menu toggle. Without JS neither class exists, so every
+      section stays readable and navigable.
     -->
     <script is:inline>
-      document.documentElement.classList.add("motion-ready");
+      document.documentElement.classList.add("js", "motion-ready");
     </script>
   </head>
 
   <body>
+    <a class="skip-link" href="#main">Saltar al contenido</a>
     <Navigation />
-    <slot />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
     <Footer />
 
     <script>
       // The hero animates on load (hero-motion.css), so it's not observed.
-      const sections = document.querySelectorAll("body > section:not(.hero)");
+      const sections = document.querySelectorAll("main > section:not(.hero)");
 
       const observer = new IntersectionObserver(
         (entries) => {
