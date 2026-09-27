@@ -1,24 +1,98 @@
-﻿---
+---
 import { contactEmail } from "../data/navigation";
 ---
 
 <section class="cta" id="contact" aria-labelledby="cta-title">
   <div class="cta__inner container">
-    <p class="cta__eyebrow">05 — Start a conversation</p>
+    <div class="cta__intro">
+      <p class="cta__eyebrow" data-reveal>05 — Start a conversation</p>
 
-    <h2 id="cta-title" class="cta__title">
-      ¿Qué necesitas
-      <br />
-      construir?
-    </h2>
+      <h2 id="cta-title" class="cta__title" data-reveal>
+        Cuéntanos qué te está frenando.
+      </h2>
 
-    <p class="cta__lead">
-      Cuéntanos qué quieres resolver, qué estás pensando construir o dónde
-      necesitas llevar tu tecnología.
-    </p>
+      <p class="cta__lead" data-reveal>
+        Una primera conversación para entender tu caso. Si no somos la opción
+        correcta, te lo diremos.
+      </p>
 
-    <a class="cta__action" href={`mailto:${contactEmail}`}>
-      Hablemos <span aria-hidden="true">→</span>
-    </a>
+      <p class="cta__direct" data-reveal>
+        ¿Prefieres escribir directo?{" "}
+        <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+      </p>
+    </div>
+
+    <!--
+      Contact shell (master plan §52): only what's needed to start a conversation.
+      No provider yet — submitting opens the visitor's mail client with the
+      message drafted. The no-JS path uses the same mailto via `action`.
+      To connect a provider, replace send() in the script below.
+    -->
+    <form
+      class="cta__form"
+      action={`mailto:${contactEmail}`}
+      method="post"
+      enctype="text/plain"
+      data-contact-form
+      data-reveal
+    >
+      <div class="cta__field">
+        <label for="contact-name">Nombre</label>
+        <input id="contact-name" name="nombre" type="text" autocomplete="name" required />
+      </div>
+
+      <div class="cta__field">
+        <label for="contact-email">Email</label>
+        <input id="contact-email" name="email" type="email" autocomplete="email" required />
+      </div>
+
+      <div class="cta__field">
+        <label for="contact-company">Empresa <span>(opcional)</span></label>
+        <input id="contact-company" name="empresa" type="text" autocomplete="organization" />
+      </div>
+
+      <div class="cta__field">
+        <label for="contact-message">¿Qué necesitas resolver?</label>
+        <!-- Capped so the drafted mailto stays under mail-handler URL limits. -->
+        <textarea id="contact-message" name="mensaje" rows="4" maxlength="1500" required></textarea>
+      </div>
+
+      <button class="cta__action" type="submit">
+        Enviar mi caso <span aria-hidden="true">→</span>
+      </button>
+
+      <!-- The live region exists from the start; revealing its content is what gets announced. -->
+      <p class="cta__status" role="status">
+        <span data-contact-status hidden>
+          Abrimos tu aplicación de correo con el mensaje listo para enviar. Si no
+          se abrió, escríbenos a <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+        </span>
+      </p>
+    </form>
   </div>
 </section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
+  // Single source: the address the server already rendered into the no-JS action.
+  const contactEmail = form?.getAttribute("action")?.replace(/^mailto:/, "") ?? "";
+
+  // Temporary transport until a form provider is chosen (docs/STATUS.md).
+  const send = (data: FormData) => {
+    const company = String(data.get("empresa") ?? "").trim();
+    const subject = `Nuevo caso — ${data.get("nombre")}${company ? ` (${company})` : ""}`;
+    const body = `${data.get("mensaje")}\n\n${data.get("nombre")} · ${data.get("email")}`;
+
+    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  // mailto gives no delivery signal (e.g. no default mail app), so always
+  // confirm what happened and repeat the address as a fallback.
+  const status = form?.querySelector<HTMLElement>("[data-contact-status]");
+
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    send(new FormData(form));
+    if (status) status.hidden = false;
+  });
+</script>

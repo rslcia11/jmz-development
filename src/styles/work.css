@@ -55,22 +55,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 32rem;
+  min-height: 20rem;
   color: var(--color-text-muted);
   font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  transition:
-    transform var(--duration-slow) var(--ease-emphasized),
-    background-color var(--duration-slow) var(--ease-standard);
 }
 
-.work-project__visual:hover .work-project__placeholder {
-  transform: scale(1.015);
-  background: var(--color-surface);
-}
-
+/*
+  Visual slots stay modest while projects are description-only (no client
+  imagery yet): the text carries the proof, not an empty frame.
+*/
 .work-project--featured {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(20rem, 0.65fr);
@@ -79,12 +75,12 @@
 }
 
 .work-project--featured .work-project__visual {
-  min-height: 42rem;
+  min-height: 28rem;
 }
 
 .work-project--featured .work-project__placeholder {
   height: 100%;
-  min-height: 42rem;
+  min-height: 28rem;
 }
 
 .work-project__content {
@@ -151,31 +147,13 @@
   margin-top: var(--space-6);
 }
 
-.work-project__tags span {
+.work-project__tags li {
   padding: var(--space-2) var(--space-3);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-full);
   color: var(--color-text-secondary);
   font-family: var(--font-mono);
   font-size: var(--text-label);
-}
-
-.work-project__link {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  margin-top: var(--space-8);
-  color: var(--color-text-primary);
-  font-size: var(--text-body-sm);
-  font-weight: var(--font-weight-medium);
-  transition:
-    color var(--duration-fast) var(--ease-standard),
-    gap var(--duration-fast) var(--ease-emphasized);
-}
-
-.work-project__link:hover {
-  color: var(--color-brand);
-  gap: var(--space-3);
 }
 
 .work-projects__grid {
@@ -186,7 +164,7 @@
 }
 
 .work-projects__grid .work-project__placeholder {
-  min-height: 24rem;
+  min-height: 16rem;
 }
 
 .work-projects__grid .work-project__content {
@@ -194,7 +172,9 @@
 }
 
 @media (max-width: 63.99rem) {
+  /* One track: 12 columns keep 11 gaps and overflow phones. */
   .work__header {
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-8);
   }
 
@@ -207,12 +187,12 @@
   }
 
   .work-project--featured {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .work-project--featured .work-project__visual,
   .work-project--featured .work-project__placeholder {
-    min-height: 34rem;
+    min-height: 22rem;
   }
 }
 
@@ -227,16 +207,16 @@
 
   .work-project--featured .work-project__visual,
   .work-project--featured .work-project__placeholder {
-    min-height: 22rem;
+    min-height: 14rem;
   }
 
   .work-projects__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-12);
     margin-top: var(--space-12);
   }
 
   .work-projects__grid .work-project__placeholder {
-    min-height: 18rem;
+    min-height: 12rem;
   }
 }

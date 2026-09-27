@@ -38,13 +38,21 @@
   text-transform: uppercase;
 }
 
+/* A full sentence, not a slogan: sized to read in one pass on any width. */
 .hero__title {
   max-width: 70rem;
-  font-size: var(--text-display-lg);
+  font-size: var(--text-heading-xl);
   font-weight: var(--font-weight-medium);
-  line-height: var(--leading-tight);
+  line-height: var(--leading-snug);
   letter-spacing: var(--tracking-tight);
   text-wrap: balance;
+}
+
+/* Second voice of the headline: the differentiator, one step quieter. */
+.hero__title-aside {
+  display: block;
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
 }
 
 .hero__description {
@@ -96,13 +104,6 @@
   border-color: var(--color-text-muted);
 }
 
-/* Shares the row with the system graphic, so the statement scales down a step. */
-@media (min-width: 64rem) {
-  .hero__title {
-    font-size: var(--text-display-md);
-  }
-}
-
 @media (max-width: 63.99rem) {
   .hero__inner {
     grid-template-columns: minmax(0, 1fr);
@@ -124,10 +125,6 @@
   .hero {
     min-height: calc(100svh - var(--header-height));
     padding-block: var(--space-16);
-  }
-
-  .hero__title {
-    font-size: var(--text-display-md);
   }
 
   .hero__description {
