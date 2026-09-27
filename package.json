@@ -13,8 +13,7 @@
   },
   "dependencies": {
     "animejs": "^4.5.0",
-    "astro": "^7.3.4",
-    "geist": "^1.7.2"
+    "astro": "^7.3.4"
   },
   "allowScripts": {
     "esbuild": true
