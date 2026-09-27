@@ -38,10 +38,10 @@
   text-transform: uppercase;
 }
 
-/* A full sentence, not a slogan: sized to read in one pass on any width. */
+/* A short umbrella statement: display size on wide screens, one step down on phones. */
 .hero__title {
   max-width: 70rem;
-  font-size: var(--text-heading-xl);
+  font-size: var(--text-display-md);
   font-weight: var(--font-weight-medium);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-tight);
@@ -49,11 +49,6 @@
 }
 
 /* Second voice of the headline: the differentiator, one step quieter. */
-.hero__title-aside {
-  display: block;
-  margin-top: var(--space-2);
-  color: var(--color-text-muted);
-}
 
 .hero__description {
   max-width: var(--layout-text-max-width);
@@ -125,6 +120,10 @@
   .hero {
     min-height: calc(100svh - var(--header-height));
     padding-block: var(--space-16);
+  }
+
+  .hero__title {
+    font-size: var(--text-heading-xl);
   }
 
   .hero__description {

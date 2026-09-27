@@ -36,27 +36,31 @@ the visual and motion language; they will be revisited once the hero is polished
 | Fonts | Geist + Geist Mono (self-hosted variable woff2) | `src/styles/tokens/typography.css` |
 | Theme / accent | Dark base (`#0b0b0a`), single amber accent (`#d6a56b`) | `src/styles/tokens/design-tokens.css` |
 | Copy language | Spanish (`lang="es"`), mono technical labels in English | — |
-| Copy voice | Clear, objective, specific; commitments over claims; hero: "Construimos sistemas ERP, modelos de IA y sitios web. Pero antes, preguntamos para qué." | [docs/copy.md](copy.md) |
+| Copy voice | Clear, objective, specific; commitments over claims; hero: "Convertimos tu idea en software." (owner's pick; subhead opens the problem door and names the services). Audience is global, never "tu negocio" | [docs/copy.md](copy.md) |
 | Page structure | Keep the six current sections (owner decision 2026-09-25), no Systems/Capability sections for now | — |
-| Work section | Description-only projects (no client names or metrics), data in `src/data/projects.ts`; no case-study links until pages exist | — |
+| Work section | Real projects only (source: owner + github.com/rslcia11, reviewed 2026-09-27): 2 confidential ERPs featured, never with client names; Tactical Store (client, in production), EcoAlerta, IntelliCar Pro, live AI assistant, crowd-capacity control, vulnerability scanner; web clients Musa Rosa and Jimenez Services LLC, named with owner approval. Text-first cards, no empty image frames, no case-study links until pages exist | `src/data/projects.ts` |
 | Contact | 4-field form shell (§52); mailto transport until a provider is chosen | `src/components/CTA.astro` |
 | WebGL / Three.js | Not used (§39) | — |
 
 ## Blocked / pending explicit approval
 
-- Confirm each draft project in `src/data/projects.ts` against the real project
-  (one real detail each makes the copy stronger); visuals for Work.
 - Confirm the process/commitment claims in Understand and About match how JMZ
   actually works.
+- "ERP multiempresa" assumes the owner's "ERM multiempresarial" meant a
+  multi-company ERP — confirm.
 - Real WhatsApp / LinkedIn; confirm `hello@jmzdevelopment.com` and the GitHub org.
-- Contact channel/provider (WhatsApp, form service or booking) and analytics (§52, §56).
+- Contact channel/provider (WhatsApp, form service or booking) and analytics
+  (§52, §56) — deferred by owner.
 
-## Next steps (ordered)
+## Next steps (ordered, owner's phase plan 2026-09-27)
 
-1. Owner review of the new copy, then close Phase 3.
-2. SEO baseline: canonical, Open Graph, sitemap, robots (§53).
-3. Connect the contact channel.
-4. Custom 404 (§66).
+1. ✅ Commit pending work.
+2. ✅ GitHub portfolio research → real projects in Work.
+3. ⏸ Contact channel — deferred.
+4. SEO: research and plan (§53).
+5. Custom 404 (§66).
+6. Motion polish, performance, accessibility, cross-browser QA (phases 11–14).
+7. Deploy (last).
 
 ## Motion system
 

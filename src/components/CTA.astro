@@ -8,11 +8,11 @@ import { contactEmail } from "../data/navigation";
       <p class="cta__eyebrow" data-reveal>05 — Start a conversation</p>
 
       <h2 id="cta-title" class="cta__title" data-reveal>
-        Cuéntanos qué te está frenando.
+        ¿Qué quieres resolver o crear?
       </h2>
 
       <p class="cta__lead" data-reveal>
-        Una primera conversación para entender tu caso. Si no somos la opción
+        Cuéntanos tu caso o tu idea en pocas líneas. Si no somos la opción
         correcta, te lo diremos.
       </p>
 
@@ -47,18 +47,18 @@ import { contactEmail } from "../data/navigation";
       </div>
 
       <div class="cta__field">
-        <label for="contact-company">Empresa <span>(opcional)</span></label>
+        <label for="contact-company">Empresa u organización <span>(opcional)</span></label>
         <input id="contact-company" name="empresa" type="text" autocomplete="organization" />
       </div>
 
       <div class="cta__field">
-        <label for="contact-message">¿Qué necesitas resolver?</label>
+        <label for="contact-message">¿Qué necesitas resolver o construir?</label>
         <!-- Capped so the drafted mailto stays under mail-handler URL limits. -->
         <textarea id="contact-message" name="mensaje" rows="4" maxlength="1500" required></textarea>
       </div>
 
       <button class="cta__action" type="submit">
-        Enviar mi caso <span aria-hidden="true">→</span>
+        Quiero conversar <span aria-hidden="true">→</span>
       </button>
 
       <!-- The live region exists from the start; revealing its content is what gets announced. -->
