@@ -1,28 +1,31 @@
-﻿.hero__eyebrow,
+/*
+  Hero copy entrance: a CSS animation (not the scroll observer) so it plays on
+  load and needs no JS. Same grammar as [data-reveal] (motion.css), with a
+  short stagger so the statement is readable almost immediately (§20).
+*/
+.hero__eyebrow,
 .hero__title,
 .hero__description,
 .hero__actions {
-  opacity: 0;
-  transform: translateY(4px);
-  animation: hero-reveal 1800ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  animation: hero-reveal var(--duration-reveal) var(--ease-emphasized) both;
 }
 
 .hero__title {
-  animation-delay: 180ms;
+  animation-delay: var(--reveal-stagger);
 }
 
 .hero__description {
-  animation-delay: 360ms;
+  animation-delay: calc(2 * var(--reveal-stagger));
 }
 
 .hero__actions {
-  animation-delay: 540ms;
+  animation-delay: calc(3 * var(--reveal-stagger));
 }
 
 @keyframes hero-reveal {
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
   }
 }
 
@@ -31,8 +34,6 @@
   .hero__title,
   .hero__description,
   .hero__actions {
-    opacity: 1;
-    transform: none;
     animation: none;
   }
 }

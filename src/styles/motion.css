@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --duration-instant: 100ms;
   --duration-fast: 180ms;
   --duration-normal: 300ms;
@@ -11,24 +11,37 @@
   --ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
   --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+
+  /* Entrance grammar shared by the hero and every [data-reveal] element. */
+  --reveal-distance: 1.5rem;
+  --reveal-stagger: 110ms;
 }
 
-.motion-ready main > section:not(.hero) {
+/*
+  Scroll reveal. Mark elements with [data-reveal]; BaseLayout's observer adds
+  .is-visible as each one enters the viewport and sets --reveal-index per
+  batch, so elements entering together cascade while a lone late element
+  appears without waiting.
+
+  Keep [data-reveal] off elements with their own hover/press transitions: the
+  delay applies to every transitioned property. Wrap them instead.
+*/
+.motion-ready [data-reveal] {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(var(--reveal-distance));
   transition:
-    opacity var(--duration-reveal) var(--ease-emphasized),
+    opacity var(--duration-slower) var(--ease-emphasized),
     transform var(--duration-reveal) var(--ease-emphasized);
+  transition-delay: calc(var(--reveal-index, 0) * var(--reveal-stagger));
 }
 
-.motion-ready main > section:not(.hero).is-visible {
+.motion-ready [data-reveal].is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .motion-ready main > section:not(.hero),
-  .motion-ready main > section:not(.hero).is-visible {
+  .motion-ready [data-reveal] {
     opacity: 1;
     transform: none;
     transition: none;

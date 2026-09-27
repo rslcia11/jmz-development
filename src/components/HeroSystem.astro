@@ -111,16 +111,18 @@ const output = [200, 248, 200, 400];
     root.classList.add("is-ready");
 
     // complexity → understanding → system → solution (§19).
+    // ~2.4s total: structure first, then assembly, connections, and the
+    // accent last as the payoff — while the copy is already readable.
     const assembly = createTimeline({ autoplay: false, defaults: { ease: "outExpo" } })
-      .add(guides, { draw: "0 1", duration: 1200, ease: "inOutQuad" }, stagger(50))
+      .add(guides, { draw: "0 1", duration: 1000, ease: "inOutQuad" }, stagger(40))
       .add(
         modules,
-        { x: 0, y: 0, rotate: 0, scale: 1, opacity: 1, duration: 1400 },
-        stagger(80, { start: 400 }),
+        { x: 0, y: 0, rotate: 0, scale: 1, opacity: 1, duration: 1200 },
+        stagger(70, { start: 300 }),
       )
-      .add(links, { draw: "0 1", duration: 700, ease: "inOutQuad" }, stagger(60, { start: 1300 }))
-      .add(".hero-system__node", { scale: 1, duration: 500 }, stagger(40, { start: 1700 }))
-      .add(".hero-system__accent", { scale: 1, duration: 900 }, 2100);
+      .add(links, { draw: "0 1", duration: 600, ease: "inOutQuad" }, stagger(50, { start: 1000 }))
+      .add(".hero-system__node", { scale: 1, duration: 400 }, stagger(40, { start: 1300 }))
+      .add(".hero-system__accent", { scale: 1, duration: 800 }, 1600);
 
     // On narrow screens the graphic sits below the fold: assemble when it's
     // actually seen. On desktop it's in view at load, so this fires at once.
