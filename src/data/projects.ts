@@ -1,44 +1,92 @@
-export interface Project {
-  /** Kind of work, shown as the visual label and meta line. */
-  type: string;
-  title: string;
-  problem: string;
-  solution: string;
-  /** Qualitative only until a verifiable metric exists (master plan §27, §30). */
-  result: string;
-  tags: string[];
+/*
+  Every entry describes real work (sources: owner confirmation and the public
+  repositories at github.com/rslcia11, reviewed 2026-09-27). Keep it that way:
+  no invented metrics or outcomes (master plan §27, §30).
+*/
+
+export interface ErpWork {
+  name: string;
+  description: string;
 }
 
-/*
-  DRAFT copy: describes the kinds of projects JMZ has delivered without client
-  names (confidentiality). Every sentence must stay true for the real project it
-  stands for — replace details with real ones before launch, never embellish.
+/**
+  Featured: client ERPs are confidential — no client names, screenshots or
+  internals. Never name the companies here.
 */
+export const erpWork: ErpWork[] = [
+  { name: "ERP corporativo", description: "ERP a medida para la operación de una empresa privada." },
+  { name: "ERP multiempresa", description: "Una sola plataforma para administrar varias empresas." },
+];
+
+export type ProjectType = "Gestión" | "Plataforma" | "IA" | "Seguridad";
+
+export interface Project {
+  /** Service it proves: shown as the mono type label. */
+  type: ProjectType;
+  title: string;
+  /** Relationship to the work, stated honestly. */
+  context: string;
+  summary: string;
+  stack: string[];
+}
+
 export const projects: Project[] = [
   {
-    type: "ERP",
-    title: "Sistema de gestión a medida",
-    problem:
-      "La operación vivía repartida entre hojas de cálculo y herramientas que no se comunicaban entre sí.",
-    solution:
-      "Un ERP diseñado alrededor de cómo trabaja el equipo, con la información de la operación en un solo lugar.",
-    result: "Una sola fuente de verdad para operar y decidir.",
-    tags: ["ERP", "Procesos", "Datos"],
+    type: "Gestión",
+    title: "Tactical Store",
+    context: "Cliente · En producción",
+    summary:
+      "E-commerce con panel de gestión para una tienda de implementos tácticos y de seguridad en Ecuador: catálogo, inventario, órdenes, métricas y alertas por WhatsApp.",
+    stack: ["Next.js", "NestJS", "PostgreSQL"],
+  },
+  {
+    type: "Plataforma",
+    title: "EcoAlerta",
+    context: "Proyecto propio",
+    summary:
+      "Plataforma de reporte ciudadano: cualquiera reporta basura, baches o luminarias dañadas con foto y ubicación en el mapa, y la autoridad le da seguimiento desde un panel hasta cerrar el caso con evidencia.",
+    stack: ["Next.js", "React", "Leaflet"],
   },
   {
     type: "IA",
-    title: "Modelo de inteligencia artificial aplicado",
-    problem: "Una tarea repetitiva dependía de revisión manual y consumía horas del equipo.",
-    solution: "Un modelo entrenado con los datos del propio negocio para resolverla de forma automática.",
-    result: "El equipo dedica ese tiempo a trabajo que sí necesita criterio humano.",
-    tags: ["IA", "Automatización"],
+    title: "IntelliCar Pro",
+    context: "Proyecto propio",
+    summary:
+      "Modelo de machine learning que estima el precio de un auto usado en el mercado ecuatoriano y filtra los anuncios para mostrar solo los que tienen precios reales.",
+    stack: ["Python", "XGBoost", "Streamlit"],
   },
   {
-    type: "Web",
-    title: "Landing orientada a conversión",
-    problem: "El sitio no explicaba con claridad qué ofrecía la empresa ni invitaba a contactarla.",
-    solution: "Una página rápida, directa y medible, construida alrededor de una sola acción.",
-    result: "Un mensaje que se entiende en segundos y un camino claro hacia el contacto.",
-    tags: ["Web", "Conversión"],
+    type: "IA",
+    title: "Asistente de IA para transmisiones en vivo",
+    context: "En colaboración",
+    summary:
+      "Avatar animado que responde con voz, en tiempo real, a los comentarios y regalos de un LIVE de TikTok. Probado en transmisiones reales.",
+    stack: ["Node.js", "Gemini", "PixiJS"],
   },
+  {
+    type: "IA",
+    title: "Control de aforo",
+    context: "Proyecto de equipo",
+    summary:
+      "Conteo de personas en tiempo real con visión por computadora para controlar la capacidad de un espacio.",
+    stack: ["Python", "YOLOv8", "OpenCV"],
+  },
+  {
+    type: "Seguridad",
+    title: "Escáner de vulnerabilidades",
+    context: "Herramienta propia",
+    summary:
+      "Escaneo automatizado de puertos, servicios y vulnerabilidades conocidas (CVE), con reportes en HTML y JSON.",
+    stack: ["Python", "Nmap", "Nikto"],
+  },
+];
+
+export interface WebClient {
+  name: string;
+  business: string;
+}
+
+export const webClients: WebClient[] = [
+  { name: "Musa Rosa", business: "Salón de belleza · Machachi" },
+  { name: "Jimenez Services LLC", business: "Jardinería y remodelación" },
 ];

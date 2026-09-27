@@ -1,4 +1,4 @@
-﻿.work {
+.work {
   padding-block: var(--space-40);
   border-top: 1px solid var(--color-border-subtle);
 }
@@ -33,7 +33,7 @@
 }
 
 .work__lead {
-  max-width: 38rem;
+  max-width: var(--layout-text-max-width);
   margin-top: var(--space-6);
   color: var(--color-text-secondary);
   font-size: var(--text-body-lg);
@@ -44,18 +44,15 @@
   margin-top: var(--space-24);
 }
 
-.work-project__visual {
-  display: block;
-  overflow: hidden;
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border-subtle);
-}
+/*
+  Text-first cards: the ERPs are confidential and the rest have no imagery
+  yet, so the proof is what each project does and what it's built with —
+  never an empty frame.
+*/
 
-.work-project__placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 20rem;
+/* Mono label voice, shared by the meta line and the web clients strip. */
+.work-project__meta,
+.work-web__label {
   color: var(--color-text-muted);
   font-family: var(--font-mono);
   font-size: var(--text-label);
@@ -63,92 +60,114 @@
   text-transform: uppercase;
 }
 
-/*
-  Visual slots stay modest while projects are description-only (no client
-  imagery yet): the text carries the proof, not an empty frame.
-*/
-.work-project--featured {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(20rem, 0.65fr);
-  gap: var(--space-12);
-  align-items: end;
-}
-
-.work-project--featured .work-project__visual {
-  min-height: 28rem;
-}
-
-.work-project--featured .work-project__placeholder {
-  height: 100%;
-  min-height: 28rem;
-}
-
-.work-project__content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
+/* Meta line: number · type. */
 .work-project__meta {
   display: flex;
   align-items: center;
   gap: var(--space-4);
-  color: var(--color-text-muted);
-  font-family: var(--font-mono);
-  font-size: var(--text-label);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
 }
 
-.work-project__title {
+/* Featured: the ERPs, intro on the left and the two systems on the right. */
+.work-featured {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-12);
+  padding-block: var(--space-12);
+  border-block: 1px solid var(--color-border-default);
+}
+
+.work-featured__intro {
+  grid-column: 1 / span 6;
+}
+
+.work-featured__title {
   margin-top: var(--space-4);
-  font-size: var(--text-heading-lg);
+  font-size: var(--text-heading-xl);
   font-weight: var(--font-weight-medium);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-tight);
 }
 
-.work-project__description {
-  max-width: 34rem;
-  margin-top: var(--space-4);
+.work-featured__summary {
+  max-width: var(--layout-text-max-width);
+  margin-top: var(--space-6);
   color: var(--color-text-secondary);
   font-size: var(--text-body-md);
   line-height: var(--leading-relaxed);
 }
 
-.work-project__details {
-  width: 100%;
-  margin-top: var(--space-8);
+.work-featured__list {
+  grid-column: 8 / -1;
+  align-self: end;
+}
+
+.work-featured__item {
+  padding-block: var(--space-5);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.work-featured__item dt {
+  color: var(--color-brand);
+  font-size: var(--text-heading-md);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--tracking-tight);
+}
+
+.work-featured__item dd {
+  margin-top: var(--space-2);
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-relaxed);
+}
+
+/* Project grid: rule on top instead of a box (§13). */
+.work-projects__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  gap: var(--space-12) var(--space-8);
+  margin-top: var(--space-16);
+}
+
+.work-project {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: var(--space-6);
   border-top: 1px solid var(--color-border-default);
 }
 
-.work-project__detail {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  padding-block: var(--space-4);
-  border-bottom: 1px solid var(--color-border-default);
-  color: var(--color-text-secondary);
+.work-project__title {
+  margin-top: var(--space-4);
+  font-size: var(--text-heading-md);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+}
+
+.work-project__context {
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
   font-size: var(--text-body-sm);
 }
 
-.work-project__label {
-  color: var(--color-text-muted);
-  font-family: var(--font-mono);
-  font-size: var(--text-label);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
+.work-project__description {
+  margin-top: var(--space-4);
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-relaxed);
 }
 
+/* Pushed to the bottom so tags align across a row of uneven descriptions. */
 .work-project__tags {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-  margin-top: var(--space-6);
+  margin-top: auto;
+  padding-top: var(--space-6);
 }
 
 .work-project__tags li {
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-1) var(--space-3);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-full);
   color: var(--color-text-secondary);
@@ -156,43 +175,52 @@
   font-size: var(--text-label);
 }
 
-.work-projects__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-8);
+/* Web clients strip. */
+.work-web {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-4) var(--space-12);
   margin-top: var(--space-16);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--color-border-subtle);
 }
 
-.work-projects__grid .work-project__placeholder {
-  min-height: 16rem;
+.work-web__clients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-12);
 }
 
-.work-projects__grid .work-project__content {
-  padding-top: var(--space-6);
+.work-web__clients li {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.work-web__clients strong {
+  font-size: var(--text-body-lg);
+  font-weight: var(--font-weight-medium);
+}
+
+.work-web__clients span {
+  color: var(--color-text-muted);
+  font-size: var(--text-body-sm);
 }
 
 @media (max-width: 63.99rem) {
   /* One track: 12 columns keep 11 gaps and overflow phones. */
-  .work__header {
+  .work__header,
+  .work-featured {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-8);
   }
 
-  .work__eyebrow {
+  .work__eyebrow,
+  .work__heading,
+  .work-featured__intro,
+  .work-featured__list {
     grid-column: 1 / -1;
-  }
-
-  .work__heading {
-    grid-column: 1 / -1;
-  }
-
-  .work-project--featured {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .work-project--featured .work-project__visual,
-  .work-project--featured .work-project__placeholder {
-    min-height: 22rem;
   }
 }
 
@@ -205,18 +233,7 @@
     margin-top: var(--space-16);
   }
 
-  .work-project--featured .work-project__visual,
-  .work-project--featured .work-project__placeholder {
-    min-height: 14rem;
-  }
-
   .work-projects__grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-12);
     margin-top: var(--space-12);
-  }
-
-  .work-projects__grid .work-project__placeholder {
-    min-height: 12rem;
   }
 }

@@ -1,7 +1,6 @@
 ---
-import { projects } from "../data/projects";
+import { erpWork, projects, webClients } from "../data/projects";
 
-const [featured, ...rest] = projects;
 const number = (index: number) => String(index + 1).padStart(2, "0");
 ---
 
@@ -13,76 +12,67 @@ const number = (index: number) => String(index + 1).padStart(2, "0");
       <h2 id="work-title" class="work__title">Lo que construimos.</h2>
 
       <p class="work__lead">
-        Algunos proyectos recientes. Por confidencialidad no mostramos nombres de
-        clientes: mostramos el problema y cómo lo resolvimos.
+        Proyectos reales, cada uno con lo que hace y con qué está hecho. Los ERP
+        son confidenciales por pedido del cliente; del resto mostramos el
+        detalle.
       </p>
     </div>
   </div>
 
   <div class="work__projects container">
-    {featured && (
-      <article class="work-project work-project--featured" data-reveal>
-        <div class="work-project__visual" aria-hidden="true">
-          <div class="work-project__placeholder">
-            <span>{featured.type}</span>
+    <article class="work-featured" data-reveal>
+      <div class="work-featured__intro">
+        <p class="work-project__meta"><span>{number(0)}</span><span>ERP</span></p>
+
+        <h3 class="work-featured__title">Sistemas ERP a medida</h3>
+
+        <p class="work-featured__summary">
+          Hemos construido sistemas ERP completos, además de otros sistemas
+          de gestión. Por confidencialidad con nuestros clientes no publicamos
+          capturas ni detalles internos.
+        </p>
+      </div>
+
+      <dl class="work-featured__list">
+        {erpWork.map(({ name, description }) => (
+          <div class="work-featured__item">
+            <dt>{name}</dt>
+            <dd>{description}</dd>
           </div>
-        </div>
-
-        <div class="work-project__content">
-          <div class="work-project__meta">
-            <span>{number(0)}</span>
-            <span>{featured.type}</span>
-          </div>
-
-          <h3 class="work-project__title">{featured.title}</h3>
-
-          <dl class="work-project__details">
-            <div class="work-project__detail">
-              <dt class="work-project__label">Problema</dt>
-              <dd>{featured.problem}</dd>
-            </div>
-
-            <div class="work-project__detail">
-              <dt class="work-project__label">Solución</dt>
-              <dd>{featured.solution}</dd>
-            </div>
-
-            <div class="work-project__detail">
-              <dt class="work-project__label">Resultado</dt>
-              <dd>{featured.result}</dd>
-            </div>
-          </dl>
-        </div>
-      </article>
-    )}
+        ))}
+      </dl>
+    </article>
 
     <div class="work-projects__grid">
-      {rest.map((project, index) => (
-        <article class="work-project work-project--secondary" data-reveal>
-          <div class="work-project__visual" aria-hidden="true">
-            <div class="work-project__placeholder">
-              <span>{project.type}</span>
-            </div>
-          </div>
+      {projects.map((project, index) => (
+        <article class="work-project" data-reveal>
+          <p class="work-project__meta">
+            <span>{number(index + 1)}</span>
+            <span>{project.type}</span>
+          </p>
 
-          <div class="work-project__content">
-            <div class="work-project__meta">
-              <span>{number(index + 1)}</span>
-              <span>{project.type}</span>
-            </div>
+          <h3 class="work-project__title">{project.title}</h3>
+          <p class="work-project__context">{project.context}</p>
+          <p class="work-project__description">{project.summary}</p>
 
-            <h3 class="work-project__title">{project.title}</h3>
-
-            <p class="work-project__description">
-              {project.problem} {project.solution}
-            </p>
-
-            <ul class="work-project__tags" role="list" aria-label="Áreas del proyecto">
-              {project.tags.map((tag) => <li>{tag}</li>)}
-            </ul>
-          </div>
+          <ul class="work-project__tags" role="list" aria-label="Tecnologías">
+            {project.stack.map((tech) => <li>{tech}</li>)}
+          </ul>
         </article>
       ))}
+    </div>
+
+    <div class="work-web" data-reveal>
+      <p class="work-web__label" id="work-web-label">Sitios web para</p>
+
+      <ul class="work-web__clients" role="list" aria-labelledby="work-web-label">
+        {webClients.map(({ name, business }) => (
+          <li>
+            <strong>{name}</strong>
+            <span>{business}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   </div>
 </section>
