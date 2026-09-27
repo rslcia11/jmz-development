@@ -86,7 +86,12 @@
   line-height: var(--leading-relaxed);
 }
 
+/* Collapse to one track: 12 columns keep 11 gaps (528px) and overflow phones. */
 @media (max-width: 63.99rem) {
+  .build__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .build__intro,
   .build__capabilities {
     grid-column: 1 / -1;
