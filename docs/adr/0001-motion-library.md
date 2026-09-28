@@ -1,6 +1,6 @@
 # 0001 — Anime.js v4 as the motion library
 
-- **Status**: accepted
+- **Status**: superseded by [0002](0002-gsap-three-single-scene.md)
 - **Date**: 2026-09-25
 - **Door type**: one-way (every choreographed sequence will be written against its API)
 
@@ -26,7 +26,7 @@ motion) stay in CSS and native browser APIs.
 ## Alternatives considered
 
 | Option | Pros | Cons | Why not chosen |
-|--------|------|------|----------------|
+| --- | --- | --- | --- |
 | Anime.js v4 | Modular ESM imports, tree-shakeable; timelines, `stagger`, `svg.createDrawable`, `splitText`, `onScroll` sync in one package; MIT | No built-in pinning; smaller community than GSAP | — chosen |
 | GSAP + ScrollTrigger | Industry standard; most robust pin/scrub; all plugins free | Heavier bundle; its main advantage (pinning) is covered by `position: sticky` | Cost not justified for this scope (§33) |
 | Native (CSS scroll-driven animations + WAAPI) | Zero dependencies | Complex multi-step choreography gets hard to maintain; uneven cross-browser support for scroll timelines | Maintainability of the wow moments |

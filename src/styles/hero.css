@@ -1,8 +1,5 @@
 ﻿.hero {
   position: relative;
-  isolation: isolate;
-  /* Clips the system graphic's trace line at the section edge. */
-  overflow: hidden;
   min-height: min(52rem, calc(100svh - var(--header-height)));
   display: flex;
   align-items: center;
@@ -47,8 +44,6 @@
   letter-spacing: var(--tracking-tight);
   text-wrap: balance;
 }
-
-/* Second voice of the headline: the differentiator, one step quieter. */
 
 .hero__description {
   max-width: var(--layout-text-max-width);

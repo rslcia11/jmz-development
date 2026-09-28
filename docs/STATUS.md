@@ -1,15 +1,17 @@
 # Project Status — JMZ Development & Solutions website
 
-_Last updated: 2026-09-25 — update at the close of any Level 2+ change._
+_Last updated: 2026-09-27 — update at the close of any Level 2+ change._
 
 ## Where we are
 
-Phases 1–2 of the master document (§71) are done: tokens, fonts, layout,
-semantic landmarks, sticky navigation with scroll-spy and a native `<dialog>`
-mobile menu. Phase 3 (Hero) is in progress: the SYSTEM / MODULE signature
-graphic assembles with Anime.js and extends into the next section on scroll.
-Sections for phases 4–10 exist as early drafts, built before the hero defined
-the visual and motion language; they will be revisited once the hero is polished.
+Phases 1–3 of the master document (§71) are done in structure and copy. The
+page had only one wow moment (the hero), so the design phases 4–10 are being
+rebuilt around **one 3D system that travels the whole page**
+([ADR 0002](adr/0002-gsap-three-single-scene.md)): Three.js + GSAP, the
+system beside the content (never behind text), moving between sections and
+resting while people read. Phase 1 of that work (3D base + hero) is built and
+awaiting the owner's visual review. SEO is planned ([seo-plan.md](seo-plan.md))
+and parked until there is a domain.
 
 ## Roadmap
 
@@ -17,56 +19,53 @@ the visual and motion language; they will be revisited once the hero is polished
 | --- | --- | --- |
 | 1 — Foundation | ✅ done | Tokens, Geist, layout grid, `<main>`, skip link |
 | 2 — Navigation | ✅ done | Sticky header, scroll-spy, `<dialog>` mobile menu, footer |
-| 3 — Hero | 🔄 in progress | System graphic + Anime.js timeline ([ADR 0001](adr/0001-motion-library.md)) |
-| 4 — Understand | ⏳ pending | Draft exists; must come before Build in the narrative (§16) |
-| 5 — Services (Build) | ⏳ pending | Draft exists |
-| 6 — Systems | ⏳ pending | Not started; second wow moment |
-| 7 — Work | ⏳ pending | Placeholder projects only — needs real projects |
-| 8 — Capability | ⏳ pending | Not started |
-| 9 — About / Approach | ⏳ pending | Draft exists |
-| 10 — Contact | ⏳ pending | CTA exists; form provider undecided |
-| 11–14 — Polish, perf, a11y, QA | ⏳ pending | |
+| 3 — Hero | 🔄 review | 3D system assembles on entry; SVG fallback |
+| 4 — Understand | ⏳ next | System: disorder → order |
+| 5–6 — Services + Systems | ⏳ pending | System opens into the JMZ map (wow 2), inside Services |
+| 7 — Work (+ Capability) | ⏳ pending | Real projects done; system changes shape per project (wow 3) |
+| 9 — About / Approach | ✅ copy | System rests |
+| 10 — Contact | 🔄 partial | Form shell; system converges by the form; channel deferred |
+| 11–14 — Polish, perf, a11y, QA | ⏳ pending | Real-device testing mandatory (ADR 0002) |
+| SEO (§53) | 📋 planned | Implement when the domain exists |
+| 404 (§66) | ⏳ pending | |
 
 ## Decisions (§82)
 
 | Topic | Decision | Where |
 | --- | --- | --- |
-| Motion library | Anime.js v4 for scroll/wow motion; CSS for micro/UI motion | [ADR 0001](adr/0001-motion-library.md) |
-| Hero graphic | Modules that assemble into a grid and connect; core module is the single accent; output line continues into the next section | `src/components/HeroSystem.astro` |
+| Motion | One persistent Three.js scene driven by GSAP + ScrollTrigger; reveals in CSS; Anime.js removed | [ADR 0002](adr/0002-gsap-three-single-scene.md) |
+| System rules | Never behind text; moves between sections, rests while reading; no scrolljacking; message first | ADR 0002 |
+| Signature system data | One layout for SVG fallback and 3D | `src/data/system.ts` |
 | Fonts | Geist + Geist Mono (self-hosted variable woff2) | `src/styles/tokens/typography.css` |
-| Theme / accent | Dark base (`#0b0b0a`), single amber accent (`#d6a56b`) | `src/styles/tokens/design-tokens.css` |
-| Copy language | Spanish (`lang="es"`), mono technical labels in English | — |
-| Copy voice | Clear, objective, specific; commitments over claims; hero: "Convertimos tu idea en software." (owner's pick; subhead opens the problem door and names the services). Audience is global, never "tu negocio" | [docs/copy.md](copy.md) |
-| Page structure | Keep the six current sections (owner decision 2026-09-25), no Systems/Capability sections for now | — |
-| Work section | Real projects only (source: owner + github.com/rslcia11, reviewed 2026-09-27): 2 confidential ERPs featured, never with client names; Tactical Store (client, in production), EcoAlerta, IntelliCar Pro, live AI assistant, crowd-capacity control, vulnerability scanner; web clients Musa Rosa and Jimenez Services LLC, named with owner approval. Text-first cards, no empty image frames, no case-study links until pages exist | `src/data/projects.ts` |
-| Contact | 4-field form shell (§52); mailto transport until a provider is chosen | `src/components/CTA.astro` |
-| WebGL / Three.js | Not used (§39) | — |
+| Theme / accent | Dark base (`#0b0b0a`), single amber accent (`#d6a56b`); the 3D reads these tokens | `src/styles/tokens/design-tokens.css` |
+| Copy | Hero "Convertimos tu idea en software."; global audience; every headline web-verified as original | [docs/copy.md](copy.md) |
+| Page structure | Six sections (owner); Systems and Capability live inside Services and Work | — |
+| Work section | Real projects only, ERPs without client names | `src/data/projects.ts` |
+| Contact | 4-field form shell (§52); mailto until a provider is chosen | `src/components/CTA.astro` |
+| SEO | WebSite + Organization JSON-LD, canonical, OG/X, sitemap, robots | [seo-plan.md](seo-plan.md) |
 
-## Blocked / pending explicit approval
+## Blocked / pending owner
 
-- Confirm the process/commitment claims in Understand and About match how JMZ
-  actually works.
-- "ERP multiempresa" assumes the owner's "ERM multiempresarial" meant a
-  multi-company ERP — confirm.
-- Real WhatsApp / LinkedIn; confirm `hello@jmzdevelopment.com` and the GitHub org.
-- Contact channel/provider (WhatsApp, form service or booking) and analytics
-  (§52, §56) — deferred by owner.
+- Domain (blocks SEO implementation and deploy).
+- "ERP multiempresa" wording — confirm.
+- Real WhatsApp / LinkedIn; contact channel and analytics (§52, §56) — deferred.
 
-## Next steps (ordered, owner's phase plan 2026-09-27)
+## Next steps
 
-1. ✅ Commit pending work.
-2. ✅ GitHub portfolio research → real projects in Work.
-3. ⏸ Contact channel — deferred.
-4. SEO: research and plan (§53).
-5. Custom 404 (§66).
-6. Motion polish, performance, accessibility, cross-browser QA (phases 11–14).
-7. Deploy (last).
+1. Owner review of the 3D hero.
+2. Understand: disorder → order.
+3. Services + Systems map.
+4. Work: per-project shapes.
+5. Contact: convergence.
+6. Phases 11–14, 404, SEO, deploy.
 
 ## Motion system
 
-- Scroll reveal: add `data-reveal` to an element; tokens `--reveal-distance`
-  and `--reveal-stagger` in `src/styles/motion.css`. Elements entering the
-  viewport together cascade; never put it on an element with its own hover
-  transitions (wrap it instead).
-- Hero copy uses the same tokens via a CSS keyframe (no JS needed).
-- Scroll/wow scenes use Anime.js ([ADR 0001](adr/0001-motion-library.md)).
+- 3D: `src/scripts/system/` — `support` (device check), `palette` (tokens),
+  `build` (objects), `stage` (renderer, on-demand render, slot mapping),
+  `pointer` (system-wide lean), `hero` (section state), `scene` (lazy entry).
+  A new section state is a new file next to `hero`, placed via a
+  `[data-system-slot]` element in that section's visual column.
+- Scroll reveal: `data-reveal` + tokens in `src/styles/motion.css`; never on
+  an element with its own hover transitions (wrap it instead).
+- Hero copy entrance: CSS keyframes, same tokens, no JS.

@@ -1,0 +1,34 @@
+---
+/*
+  The page's single 3D stage (ADR 0002): a fixed canvas behind the content.
+  The scene places itself onto [data-system-slot] elements in the layout, so
+  it never sits behind text. The copy renders first; three.js is fetched
+  after the page is idle, and only when this device should get it.
+*/
+---
+
+<canvas class="system-stage" data-system-canvas aria-hidden="true"></canvas>
+
+<script>
+  import { supports3D } from "../scripts/system/support";
+
+  const root = document.documentElement;
+  const canvas = document.querySelector<HTMLCanvasElement>("[data-system-canvas]");
+  const slot = document.querySelector("[data-system-slot]");
+
+  if (!canvas || !slot || !supports3D()) {
+    root.classList.add("system-fallback");
+  } else {
+    const mount = () =>
+      import("../scripts/system/scene")
+        .then(({ mountSystem }) => mountSystem(canvas, slot))
+        .catch(() => root.classList.add("system-fallback"));
+
+    // Text and CTAs first (LCP); the scene arrives into its reserved slot.
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(mount, { timeout: 1200 });
+    } else {
+      setTimeout(mount, 200);
+    }
+  }
+</script>

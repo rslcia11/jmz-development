@@ -1,4 +1,4 @@
-/* JMZ signature graphic — see HeroSystem.astro. */
+/* JMZ signature graphic, static SVG fallback — see HeroSystem.astro. */
 .hero-system {
   display: block;
   width: 100%;
@@ -46,53 +46,4 @@
 .hero-system__module--core .hero-system__accent {
   fill: var(--color-brand);
   stroke: none;
-}
-
-/* Rotate and scale each piece around its own center, not the SVG origin. */
-.hero-system__module,
-.hero-system__node,
-.hero-system__accent {
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-/*
-  Continuation of the core's output line down to the hero's bottom edge,
-  where the next section begins. Positioned against .hero__visual and clipped
-  by .hero (overflow: hidden, hero.css).
-*/
-.hero-system__trace {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  width: 1px;
-  height: 100vh;
-  background: var(--color-text-muted);
-  transform-origin: top;
-}
-
-/*
-  Motion start state, only when JS will run the sequence and motion is welcome.
-  Hidden until the script positions everything, so the finished system never
-  flashes before assembling.
-*/
-@media (prefers-reduced-motion: no-preference) {
-  /*
-    Failsafe: if the script never runs (blocked, failed to load), reveal the
-    finished graphic after 3s instead of leaving the column empty.
-  */
-  .motion-ready .hero-system:not(.is-ready) {
-    visibility: hidden;
-    animation: hero-system-failsafe 0s 3s forwards;
-  }
-
-  @keyframes hero-system-failsafe {
-    to {
-      visibility: visible;
-    }
-  }
-
-  .motion-ready .hero-system__trace {
-    transform: scaleY(0);
-  }
 }
