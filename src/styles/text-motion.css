@@ -1,0 +1,98 @@
+/* Text motion (src/scripts/text-motion.ts). Same easing and stagger tokens as motion.css. */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/*
+  Split headings: each word rises from behind its own mask. The mask is
+  padded so accents and descenders (é, q, p) are never clipped at the tight
+  heading leading.
+*/
+.split-word {
+  display: inline-block;
+  overflow: hidden;
+  padding-block: 0.14em;
+  margin-block: -0.14em;
+  vertical-align: top;
+}
+
+.split-word > span {
+  display: inline-block;
+  transform: translateY(115%);
+  transition: transform var(--duration-reveal) var(--ease-emphasized);
+  transition-delay: calc(120ms + var(--i, 0) * 70ms);
+}
+
+.is-split.is-in .split-word > span {
+  transform: none;
+}
+
+/* Rules that draw themselves as their item arrives ([data-line]). */
+[data-line],
+[data-step] {
+  position: relative;
+}
+
+.motion-ready [data-line] {
+  border-top-color: transparent;
+}
+
+.motion-ready [data-line]::before {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  content: "";
+  background: var(--color-border-default);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.4s var(--ease-emphasized);
+  transition-delay: calc(var(--reveal-index, 0) * var(--reveal-stagger));
+}
+
+.motion-ready [data-line].is-visible::before {
+  transform: none;
+}
+
+/* The item being read: its rule turns brand and its number lights. */
+[data-step]::after {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  content: "";
+  background: var(--color-brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.9s var(--ease-emphasized);
+}
+
+[data-step].is-current::after {
+  transform: none;
+}
+
+[data-step] > span:first-child {
+  transition: color var(--duration-normal) var(--ease-standard);
+}
+
+[data-step].is-current > span:first-child {
+  color: var(--color-brand);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-ready [data-line] {
+    border-top-color: var(--color-border-default);
+  }
+
+  .motion-ready [data-line]::before {
+    display: none;
+  }
+}

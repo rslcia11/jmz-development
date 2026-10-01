@@ -8,10 +8,10 @@ const number = (index: number) => String(index + 1).padStart(2, "0");
 
 <section class="work" id="work" aria-labelledby="work-title">
   <div class="work__header container" data-reveal>
-    <p class="work__eyebrow">03 — Work</p>
+    <p class="work__eyebrow" data-decode>03 — Work</p>
 
     <div class="work__heading">
-      <h2 id="work-title" class="work__title">Lo que construimos.</h2>
+      <h2 id="work-title" class="work__title" data-split>Lo que construimos.</h2>
 
       <p class="work__lead">
         Proyectos reales, cada uno con lo que hace y con qué está hecho. Los ERP
@@ -51,7 +51,7 @@ const number = (index: number) => String(index + 1).padStart(2, "0");
 
     <div class="work-projects__grid">
       {projects.map((project, index) => (
-        <article class="work-project" data-reveal>
+        <article class="work-project" data-line data-reveal>
           <SystemSlot
             state={`work:${project.shape}`}
             formation={workFormations[project.shape]}
