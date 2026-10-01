@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 172 40" fill="none">
+  <!-- A · Sistema: the six-module system as symbol + wordmark. -->
+  <g stroke="#f5f3ee" stroke-width="2">
+    <rect x="2" y="2" width="21" height="9" rx="1.5"/>
+    <rect x="27" y="2" width="9" height="9" rx="1.5"/>
+    <rect x="2" y="15" width="9" height="9" rx="1.5"/>
+    <rect x="27" y="15" width="9" height="23" rx="1.5"/>
+    <rect x="2" y="28" width="9" height="10" rx="1.5"/>
+  </g>
+  <rect x="14" y="15" width="9" height="9" rx="1.5" fill="#d6a56b"/>
+  <path d="M18.5 24v14" stroke="#d6a56b" stroke-width="2"/>
+  <text x="50" y="27" fill="#f5f3ee" font-family="Geist, sans-serif" font-size="24" font-weight="600" letter-spacing="-0.5">JMZ</text>
+  <text x="104" y="17.5" fill="#b8b5ae" font-family="Geist Mono, monospace" font-size="7.5" letter-spacing="0.8">DEVELOPMENT</text>
+  <text x="104" y="28.5" fill="#b8b5ae" font-family="Geist Mono, monospace" font-size="7.5" letter-spacing="0.8">&amp; SOLUTIONS</text>
+</svg>
