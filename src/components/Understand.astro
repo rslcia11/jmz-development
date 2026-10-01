@@ -1,19 +1,28 @@
+---
+import { understandFormation } from "../data/formations";
+import SystemSlot from "./SystemSlot.astro";
+---
+
 <section class="understand" aria-labelledby="understand-title">
   <div class="understand__inner container">
-    <div class="understand__intro" data-reveal>
-      <p class="understand__eyebrow">02 — Understand</p>
+    <div class="understand__intro">
+      <div data-reveal>
+        <p class="understand__eyebrow">02 — Understand</p>
 
-      <h2 id="understand-title" class="understand__title">
-        Antes del cómo,
-        <br />
-        el para qué.
-      </h2>
+        <h2 id="understand-title" class="understand__title">
+          Antes del cómo,
+          <br />
+          el para qué.
+        </h2>
 
-      <p class="understand__lead">
-        Un buen software empieza con una buena conversación. Traigas un problema
-        claro o una idea que quieras hacer realidad, primero entendemos cómo
-        trabajas y después proponemos.
-      </p>
+        <p class="understand__lead">
+          Un buen software empieza con una buena conversación. Traigas un problema
+          claro o una idea que quieras hacer realidad, primero entendemos cómo
+          trabajas y después proponemos.
+        </p>
+      </div>
+
+      <SystemSlot state="understand" formation={understandFormation} class="section-system" />
     </div>
 
     <div class="understand__process">

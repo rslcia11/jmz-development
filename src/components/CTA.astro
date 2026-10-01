@@ -1,5 +1,7 @@
 ---
+import { contactFormation } from "../data/formations";
 import { contactEmail } from "../data/navigation";
+import SystemSlot from "./SystemSlot.astro";
 ---
 
 <section class="cta" id="contact" aria-labelledby="cta-title">
@@ -20,6 +22,8 @@ import { contactEmail } from "../data/navigation";
         ¿Prefieres escribir directo?{" "}
         <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
       </p>
+
+      <SystemSlot state="contact" formation={contactFormation} class="section-system cta__system" />
     </div>
 
     <!--

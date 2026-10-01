@@ -1,43 +1,27 @@
-# Astro Starter Kit: Minimal
+# JMZ Development & Solutions — website
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Landing page for JMZ: custom software (management systems and ERP, AI, websites).
+Built with [Astro](https://astro.build) as a static site; a single Three.js scene
+driven by GSAP carries the JMZ "system" through every section.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Commands
 
-## 🚀 Project Structure
+| Command | Action |
+| --- | --- |
+| `npm install` | Install dependencies (Node ≥ 22.12) |
+| `npx astro dev --background` | Dev server at `localhost:4321` (`astro dev stop` / `status` / `logs`) |
+| `npm run build` | Production build to `./dist/` |
+| `npm run preview` | Preview the build |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Where things live
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- `src/components/` — one component per section, plus `SystemStage` (the 3D
+  canvas), `SystemSlot` and `SystemFallback` (where the system appears, and its
+  static SVG).
+- `src/data/` — copy-free data: navigation, projects, the system layout
+  (`system.ts`) and its per-section formations (`formations.ts`).
+- `src/scripts/system/` — the 3D scene: stage, builders and one file per
+  section state.
+- `src/styles/` — design tokens and one stylesheet per section.
+- `docs/` — [project status](docs/STATUS.md), [decisions (ADR)](docs/adr/),
+  [copy rules](docs/copy.md), [SEO plan](docs/seo-plan.md).

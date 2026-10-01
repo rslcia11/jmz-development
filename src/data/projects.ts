@@ -3,6 +3,7 @@
   repositories at github.com/rslcia11, reviewed 2026-09-27). Keep it that way:
   no invented metrics or outcomes (master plan §27, §30).
 */
+import type { WorkShape } from "./formations";
 
 export interface ErpWork {
   name: string;
@@ -28,6 +29,8 @@ export interface Project {
   context: string;
   summary: string;
   stack: string[];
+  /** The shape the 3D system takes on this card (formations.ts). */
+  shape: WorkShape;
 }
 
 export const projects: Project[] = [
@@ -38,6 +41,7 @@ export const projects: Project[] = [
     summary:
       "E-commerce con panel de gestión para una tienda de implementos tácticos y de seguridad en Ecuador: catálogo, inventario, órdenes, métricas y alertas por WhatsApp.",
     stack: ["Next.js", "NestJS", "PostgreSQL"],
+    shape: "store",
   },
   {
     type: "Plataforma",
@@ -46,6 +50,7 @@ export const projects: Project[] = [
     summary:
       "Plataforma de reporte ciudadano: cualquiera reporta basura, baches o luminarias dañadas con foto y ubicación en el mapa, y la autoridad le da seguimiento desde un panel hasta cerrar el caso con evidencia.",
     stack: ["Next.js", "React", "Leaflet"],
+    shape: "map",
   },
   {
     type: "IA",
@@ -54,6 +59,7 @@ export const projects: Project[] = [
     summary:
       "Modelo de machine learning que estima el precio de un auto usado en el mercado ecuatoriano y filtra los anuncios para mostrar solo los que tienen precios reales.",
     stack: ["Python", "XGBoost", "Streamlit"],
+    shape: "pricing",
   },
   {
     type: "IA",
@@ -62,6 +68,7 @@ export const projects: Project[] = [
     summary:
       "Avatar animado que responde con voz, en tiempo real, a los comentarios y regalos de un LIVE de TikTok. Probado en transmisiones reales.",
     stack: ["Node.js", "Gemini", "PixiJS"],
+    shape: "voice",
   },
   {
     type: "IA",
@@ -70,6 +77,7 @@ export const projects: Project[] = [
     summary:
       "Conteo de personas en tiempo real con visión por computadora para controlar la capacidad de un espacio.",
     stack: ["Python", "YOLOv8", "OpenCV"],
+    shape: "vision",
   },
   {
     type: "Seguridad",
@@ -78,6 +86,7 @@ export const projects: Project[] = [
     summary:
       "Escaneo automatizado de puertos, servicios y vulnerabilidades conocidas (CVE), con reportes en HTML y JSON.",
     stack: ["Python", "Nmap", "Nikto"],
+    shape: "scanner",
   },
 ];
 

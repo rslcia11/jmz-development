@@ -48,8 +48,9 @@ const UNIT = 100;
 /** Width of the whole blueprint in world units: what a slot's width maps onto. */
 export const SYSTEM_WORLD_WIDTH = SYSTEM_SIZE / UNIT;
 const DEPTH = 0.16;
-const LABEL_HEIGHT = 0.12;
-const LABEL_ASPECT = 4;
+/** Sized so the 3D labels match the SVG's 9px-in-400 mono text. */
+export const LABEL_HEIGHT = 0.14;
+export const LABEL_ASPECT = 4;
 
 /** Blueprint (x right, y down, 0..400) → world (x right, y up, centered). */
 const toWorld = (x: number, y: number) =>
@@ -76,13 +77,20 @@ export interface System3D {
   coreLight: PointLight;
 }
 
-function labelTexture(text: string, color: string, font: string): CanvasTexture {
+const labelCache = new Map<string, CanvasTexture>();
+
+/** Mono label drawn once per text and color, shared by every state that shows it. */
+export function labelTexture(text: string, color: string, font: string): CanvasTexture {
+  const key = `${text}|${color}`;
+  const cached = labelCache.get(key);
+  if (cached) return cached;
+
   const canvas = document.createElement("canvas");
   canvas.width = 512;
   canvas.height = 512 / LABEL_ASPECT;
   const context = canvas.getContext("2d");
   if (context) {
-    context.font = `500 56px ${font}`;
+    context.font = `500 80px ${font}`;
     context.fillStyle = color;
     context.textBaseline = "middle";
     context.fillText(text.toUpperCase(), 0, canvas.height / 2);
@@ -90,6 +98,7 @@ function labelTexture(text: string, color: string, font: string): CanvasTexture 
   const texture = new CanvasTexture(canvas);
   texture.colorSpace = SRGBColorSpace;
   texture.anisotropy = 4;
+  labelCache.set(key, texture);
   return texture;
 }
 
