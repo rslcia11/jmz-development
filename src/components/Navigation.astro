@@ -1,5 +1,5 @@
 ---
-import { allLinks, contactEmail, contactLink, sectionLinks } from "../data/navigation";
+import { allLinks, contactEmail, contactLink, sectionLinks, whatsapp } from "../data/navigation";
 ---
 
 <header class="site-header">
@@ -58,6 +58,10 @@ import { allLinks, contactEmail, contactLink, sectionLinks } from "../data/navig
         </li>
       ))}
     </ol>
+
+    <a class="mobile-menu__email" href={whatsapp.href} target="_blank" rel="noopener noreferrer">
+      WhatsApp {whatsapp.display}
+    </a>
 
     <a class="mobile-menu__email" href={`mailto:${contactEmail}`}>
       {contactEmail}

@@ -3,6 +3,7 @@ import "../styles/global.css";
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
 import SystemStage from "../components/SystemStage.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
 
 interface Props {
   title?: string;
@@ -56,6 +57,7 @@ const {
       <slot />
     </main>
     <Footer />
+    <WhatsAppButton />
 
     <script>
       // Scroll reveal for [data-reveal] (styles in motion.css).

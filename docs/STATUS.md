@@ -46,13 +46,17 @@ and parked until there is a domain.
 | Page structure | Six sections (owner); Systems and Capability live inside Services and Work | — |
 | Work section | Real projects only, ERPs without client names | `src/data/projects.ts` |
 | Contact | 4-field form shell (§52); mailto until a provider is chosen | `src/components/CTA.astro` |
+| WhatsApp | +593 96 378 7516: pill in Contact, footer, mobile menu, and a floating shortcut hidden over the hero and Contact | `src/data/navigation.ts`, `WhatsAppButton.astro` |
 | SEO | WebSite + Organization JSON-LD, canonical, OG/X, sitemap, robots | [seo-plan.md](seo-plan.md) |
 
 ## Blocked / pending owner
 
 - Domain (blocks SEO implementation and deploy).
 - "ERP multiempresa" wording — confirm.
-- Real WhatsApp / LinkedIn; contact channel and analytics (§52, §56) — deferred.
+- LinkedIn; form provider and analytics (§52, §56) — deferred. The email
+  works once the domain exists.
+- No testimonials (owner decision). Work shows only projects JMZ can
+  attribute to itself; private client work stays out.
 
 ## Pending owner
 

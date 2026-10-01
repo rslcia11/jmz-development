@@ -1,0 +1,49 @@
+---
+/*
+  Floating WhatsApp shortcut. Hidden over the hero (its own CTAs are there)
+  and over the contact section (WhatsApp is offered there in full), so it
+  only accompanies the reading in between. Without JS it simply stays.
+*/
+import { whatsapp } from "../data/navigation";
+---
+
+<a
+  class="whatsapp-float"
+  href={whatsapp.href}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label={`Escríbenos por WhatsApp, ${whatsapp.display}`}
+  data-whatsapp-float
+>
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path
+      d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      stroke-linejoin="round"></path>
+    <path
+      d="M9 8.5c0 3.5 2.6 6.5 6.4 6.9l1-1.4-1.9-1-1 .8a4.6 4.6 0 0 1-2.4-2.4l.8-1-1-1.9L9 8.5Z"
+      fill="currentColor"></path>
+  </svg>
+  <span>WhatsApp</span>
+</a>
+
+<script>
+  const button = document.querySelector<HTMLElement>("[data-whatsapp-float]");
+  const covering = [document.querySelector(".hero"), document.querySelector("#contact")].filter(
+    (element): element is Element => element !== null,
+  );
+
+  if (button && covering.length) {
+    const inView = new Set<Element>();
+    const observer = new IntersectionObserver((entries) => {
+      for (const { target, isIntersecting } of entries) {
+        if (isIntersecting) inView.add(target);
+        else inView.delete(target);
+      }
+      button.classList.toggle("is-hidden", inView.size > 0);
+    });
+    covering.forEach((element) => observer.observe(element));
+  }
+</script>

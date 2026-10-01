@@ -1,5 +1,5 @@
 ---
-import { allLinks, contactEmail } from "../data/navigation";
+import { allLinks, contactEmail, whatsapp } from "../data/navigation";
 ---
 
 <footer class="site-footer">
@@ -16,6 +16,10 @@ import { allLinks, contactEmail } from "../data/navigation";
 
     <div class="site-footer__contact">
       <p class="site-footer__label">Contacto</p>
+
+      <a href={whatsapp.href} target="_blank" rel="noopener noreferrer">
+        WhatsApp {whatsapp.display}
+      </a>
 
       <a href={`mailto:${contactEmail}`}>
         {contactEmail}

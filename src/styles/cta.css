@@ -49,9 +49,45 @@
 }
 
 .cta__direct {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4) var(--space-6);
   margin-top: var(--space-8);
   color: var(--color-text-muted);
   font-size: var(--text-body-sm);
+}
+
+.cta__direct p {
+  flex-basis: 100%;
+}
+
+/* The direct channel most people here prefer: a pill, one step below the form's button. */
+.cta__direct .cta__whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 2.75rem;
+  padding-inline: var(--space-5);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  transition:
+    border-color var(--duration-fast) var(--ease-standard),
+    translate var(--duration-fast) var(--ease-emphasized);
+}
+
+.cta__whatsapp span {
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-regular);
+}
+
+.cta__direct .cta__whatsapp:hover,
+.cta__direct .cta__whatsapp:focus-visible {
+  border-color: var(--color-brand);
+  translate: 0 -2px;
 }
 
 .cta__direct a {
