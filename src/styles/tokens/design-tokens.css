@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   /* ========================================
      JMZ — COLOR TOKENS
      ======================================== */
@@ -61,6 +61,10 @@
   --layout-max-width: 80rem;
   --header-height: 5rem;
   --layout-text-max-width: 38rem;
+
+  /* Vertical rhythm between sections: one value, so the page breathes evenly. */
+  --section-space: clamp(4.5rem, 7vw, 6.5rem);
+  --section-space-mobile: 4rem;
 
   --layout-gutter-mobile: var(--space-5);
   --layout-gutter-tablet: var(--space-8);

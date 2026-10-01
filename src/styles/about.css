@@ -1,5 +1,5 @@
-﻿.about {
-  padding-block: var(--space-40);
+.about {
+  padding-block: var(--section-space);
   border-top: 1px solid var(--color-border-subtle);
 }
 
@@ -104,7 +104,7 @@
 
 @media (max-width: 47.99rem) {
   .about {
-    padding-block: var(--space-24);
+    padding-block: var(--section-space-mobile);
   }
 
   .about__signal {

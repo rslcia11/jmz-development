@@ -80,6 +80,12 @@ and parked until there is a domain.
 - A new state: add its formation to `src/data/formations.ts`, drop
   `<SystemSlot state="…" formation={…} />` into the section's visual column,
   and add its choreography next to `hero` (wired in `scene.ts`).
+- Text motion (`src/scripts/text-motion.ts`, `text-motion.css`): `data-split`
+  headings rise word by word, `data-decode` eyebrows resolve from scrambled
+  mono characters, `data-line` rules draw themselves, and in `data-step`
+  lists the item crossing the middle of the screen lights its rule and number
+  (in sync with the 3D). Off with reduced motion, except the reading highlight.
+- Section spacing: one token, `--section-space` (`design-tokens.css`).
 - Scroll reveal: `data-reveal` + tokens in `src/styles/motion.css`; never on
   an element with its own hover transitions (wrap it instead).
 - Hero copy entrance: CSS keyframes, same tokens, no JS.
