@@ -1,0 +1,79 @@
+---
+/*
+  Static SVG of a formation at rest (src/data/formations.ts), projected with
+  the same pose the 3D scene rests in. It is what people see without WebGL,
+  with reduced motion or Save-Data; when the scene takes over, the slot hides
+  it. The slot's aspect ratio comes from the same bounds the scene uses to
+  fit itself, so the swap never changes the layout.
+*/
+import type { Formation } from "../data/formations";
+import { corners, FACES, formationBounds, project } from "../scripts/system/projection";
+
+interface Props {
+  formation: Formation;
+}
+
+const { formation } = Astro.props;
+const { rest } = formation;
+const bounds = formationBounds(formation);
+
+const isPlate = (block: Formation["blocks"][number]) => block.size[1] < 0.1;
+
+/** Turn a direction with the pose: only its z matters, to tell front faces from back. */
+const facing = (normal: [number, number, number]) => project(normal, rest).z > 1e-6;
+
+const blocks = formation.blocks
+  .filter((block) => !block.transient)
+  .map((block) => {
+    const points = corners(block).map((corner) => project(corner, rest));
+    const faces = FACES.filter(({ normal }) => facing(normal)).map(({ corners: face }) =>
+      face.map((index) => `${points[index].x.toFixed(3)},${points[index].y.toFixed(3)}`).join(" "),
+    );
+    const depth = project(block.at, rest).z;
+
+    // Label anchor: top-left of the face that carries it, like the 3D label.
+    const [x, y, z] = block.at;
+    const [w, h, d] = block.size;
+    const anchor =
+      block.labelFace === "top"
+        ? project([x - w / 2 + 0.1, y + h / 2, z + d / 2 - 0.14], rest)
+        : project([x - w / 2 + 0.1, y + h / 2 - 0.14, z + d / 2], rest);
+
+    return { block, faces, depth, anchor };
+  })
+  // Painter's order. Centers alone fail for big plates, so: higher groups
+  // (lower layers, copies behind) first, then flat plates under what stands
+  // on them, then farthest first.
+  .sort(
+    (a, b) =>
+      (b.block.group ?? 0) - (a.block.group ?? 0) ||
+      Number(isPlate(b.block)) - Number(isPlate(a.block)) ||
+      a.depth - b.depth,
+  );
+
+const links = formation.links.map(([from, to]) => [project(from, rest), project(to, rest)]);
+---
+
+<svg
+  class="system-fallback-graphic"
+  viewBox={`${bounds.minX} ${bounds.minY} ${bounds.width} ${bounds.height}`}
+  fill="none"
+  aria-hidden="true"
+  focusable="false"
+>
+  {links.map(([from, to]) => (
+    <line class="system-fallback-graphic__link" x1={from.x} y1={from.y} x2={to.x} y2={to.y} />
+  ))}
+
+  {blocks.map(({ block, faces, anchor }) => (
+    <g
+      class:list={[
+        "system-fallback-graphic__block",
+        block.tone && `system-fallback-graphic__block--${block.tone}`,
+      ]}
+    >
+      {faces.map((face) => <polygon points={face} />)}
+      {block.label && <text x={anchor.x} y={anchor.y}>{block.label}</text>}
+    </g>
+  ))}
+</svg>

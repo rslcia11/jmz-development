@@ -9,16 +9,22 @@ import type { Object3D } from "three";
 /** Maximum lean in radians: noticeable, never enough to distort the diagram. */
 const LEAN = { x: 0.1, y: 0.16 };
 
-export function leanTowardPointer(pivot: Object3D, invalidate: () => void): () => void {
+export function leanTowardPointer(pivots: Object3D[], invalidate: () => void): () => void {
   if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return () => undefined;
 
   const follow = { duration: 1.2, ease: "power3.out", onUpdate: invalidate };
-  const toX = gsap.quickTo(pivot.rotation, "x", follow);
-  const toY = gsap.quickTo(pivot.rotation, "y", follow);
+  const leans = pivots.map((pivot) => ({
+    toX: gsap.quickTo(pivot.rotation, "x", follow),
+    toY: gsap.quickTo(pivot.rotation, "y", follow),
+  }));
 
   const onMove = ({ clientX, clientY }: PointerEvent) => {
-    toY((clientX / window.innerWidth - 0.5) * LEAN.y);
-    toX((clientY / window.innerHeight - 0.5) * LEAN.x);
+    const y = (clientX / window.innerWidth - 0.5) * LEAN.y;
+    const x = (clientY / window.innerHeight - 0.5) * LEAN.x;
+    for (const { toX, toY } of leans) {
+      toY(y);
+      toX(x);
+    }
   };
 
   window.addEventListener("pointermove", onMove, { passive: true });

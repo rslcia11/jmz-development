@@ -1,11 +1,12 @@
 ---
-import { allLinks, contactEmail, contactLink, sectionLinks } from "../data/navigation";
+import { allLinks, contactEmail, contactLink, sectionLinks, whatsapp } from "../data/navigation";
+import Logo from "./Logo.astro";
 ---
 
 <header class="site-header">
   <nav class="site-nav container" aria-label="Navegación principal">
     <a class="site-nav__brand" href="/" aria-label="JMZ Development & Solutions — Inicio">
-      JMZ
+      <Logo />
     </a>
 
     <ul class="site-nav__links" role="list">
@@ -39,7 +40,7 @@ import { allLinks, contactEmail, contactLink, sectionLinks } from "../data/navig
 <dialog class="mobile-menu" id="mobile-menu" aria-label="Menú">
   <div class="mobile-menu__inner container">
     <div class="mobile-menu__bar">
-      <span class="site-nav__brand" aria-hidden="true">JMZ</span>
+      <span class="site-nav__brand" aria-hidden="true"><Logo /></span>
 
       <button class="mobile-menu__close" type="button" data-menu-close>
         Cerrar
@@ -58,6 +59,10 @@ import { allLinks, contactEmail, contactLink, sectionLinks } from "../data/navig
         </li>
       ))}
     </ol>
+
+    <a class="mobile-menu__email" href={whatsapp.href} target="_blank" rel="noopener noreferrer">
+      WhatsApp {whatsapp.display}
+    </a>
 
     <a class="mobile-menu__email" href={`mailto:${contactEmail}`}>
       {contactEmail}

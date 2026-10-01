@@ -1,0 +1,65 @@
+/* Floating WhatsApp shortcut (WhatsAppButton.astro). */
+.whatsapp-float {
+  position: fixed;
+  right: max(var(--space-5), env(safe-area-inset-right));
+  bottom: max(var(--space-5), env(safe-area-inset-bottom));
+  z-index: var(--z-navigation);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 3rem;
+  padding-inline: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-full);
+  background: var(--color-bg-secondary);
+  box-shadow: var(--shadow-md);
+  color: var(--color-text-primary);
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-medium);
+  transition:
+    opacity var(--duration-normal) var(--ease-standard),
+    translate var(--duration-normal) var(--ease-emphasized),
+    border-color var(--duration-fast) var(--ease-standard);
+}
+
+.whatsapp-float svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--color-brand);
+}
+
+.whatsapp-float:hover,
+.whatsapp-float:focus-visible {
+  border-color: var(--color-brand);
+  translate: 0 -2px;
+}
+
+.js .whatsapp-float.is-hidden {
+  opacity: 0;
+  translate: 0 var(--space-4);
+  pointer-events: none;
+  visibility: hidden;
+  transition:
+    opacity var(--duration-normal) var(--ease-standard),
+    translate var(--duration-normal) var(--ease-emphasized),
+    visibility 0s var(--duration-normal);
+}
+
+/* Phones: icon only, so it never covers a line of text. */
+@media (max-width: 47.99rem) {
+  .whatsapp-float {
+    width: 3.25rem;
+    min-height: 3.25rem;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .whatsapp-float span {
+    display: none;
+  }
+
+  .whatsapp-float svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

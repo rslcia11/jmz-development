@@ -1,15 +1,24 @@
+---
+import { servicesFormation } from "../data/formations";
+import SystemSlot from "./SystemSlot.astro";
+---
+
 <section class="build" id="services" aria-labelledby="build-title">
   <div class="build__inner container">
-    <div class="build__intro" data-reveal>
-      <p class="build__eyebrow">01 — Build</p>
+    <div class="build__intro">
+      <div data-reveal>
+        <p class="build__eyebrow">01 — Build</p>
 
-      <h2 id="build-title" class="build__title">En qué te podemos ayudar</h2>
+        <h2 id="build-title" class="build__title">En qué te podemos ayudar</h2>
 
-      <p class="build__lead">
-        Ya sea para resolver lo que hoy te quita tiempo o para lanzar algo que
-        todavía no existe, trabajamos en tres frentes. En los tres ya entregamos
-        proyectos reales.
-      </p>
+        <p class="build__lead">
+          Ya sea para resolver lo que hoy te quita tiempo o para lanzar algo que
+          todavía no existe, trabajamos en tres frentes. En los tres ya entregamos
+          proyectos reales.
+        </p>
+      </div>
+
+      <SystemSlot state="services" formation={servicesFormation} class="section-system" />
     </div>
 
     <div class="build__capabilities">

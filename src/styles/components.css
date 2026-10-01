@@ -17,10 +17,23 @@
 }
 
 .site-nav__brand {
+  display: inline-flex;
   justify-self: start;
-  font-size: 0.95rem;
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: var(--tracking-tight);
+}
+
+/* Wordmark (Logo.astro): outlined paths, colored from the tokens. */
+.logo {
+  display: block;
+  width: auto;
+  height: 1.75rem;
+}
+
+.logo__mark {
+  fill: var(--color-text-primary);
+}
+
+.logo__descriptor {
+  fill: var(--color-text-secondary);
 }
 
 .site-nav__links {

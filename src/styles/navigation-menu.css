@@ -114,6 +114,10 @@ html:has(.mobile-menu[open]) {
   font-size: var(--text-body-sm);
 }
 
+.mobile-menu__email + .mobile-menu__email {
+  margin-top: var(--space-3);
+}
+
 /*
   Matches the [open] selector's specificity and comes later, so it wins.
   reset.css shortens durations but not delays, so the stagger is cleared here.

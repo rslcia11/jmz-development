@@ -1,8 +1,9 @@
-﻿---
+---
 import "../styles/global.css";
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
 import SystemStage from "../components/SystemStage.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
 
 interface Props {
   title?: string;
@@ -24,6 +25,18 @@ const {
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0b0b0a" />
     <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- The headline is the LCP: fetch its font with the HTML, not after the CSS. -->
+    <link
+      rel="preload"
+      href="/fonts/geist/Geist-Variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
 
     <!--
       Set inline, before first paint. .motion-ready gates reveal styles (no
@@ -44,6 +57,7 @@ const {
       <slot />
     </main>
     <Footer />
+    <WhatsAppButton />
 
     <script>
       // Scroll reveal for [data-reveal] (styles in motion.css).

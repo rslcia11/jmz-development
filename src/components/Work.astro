@@ -1,5 +1,7 @@
 ---
+import { workFormations } from "../data/formations";
 import { erpWork, projects, webClients } from "../data/projects";
+import SystemSlot from "./SystemSlot.astro";
 
 const number = (index: number) => String(index + 1).padStart(2, "0");
 ---
@@ -33,19 +35,29 @@ const number = (index: number) => String(index + 1).padStart(2, "0");
         </p>
       </div>
 
-      <dl class="work-featured__list">
-        {erpWork.map(({ name, description }) => (
-          <div class="work-featured__item">
-            <dt>{name}</dt>
-            <dd>{description}</dd>
-          </div>
-        ))}
-      </dl>
+      <div class="work-featured__aside">
+        <SystemSlot state="work:erp" formation={workFormations.erp} class="work-featured__visual" />
+
+        <dl class="work-featured__list">
+          {erpWork.map(({ name, description }) => (
+            <div class="work-featured__item">
+              <dt>{name}</dt>
+              <dd>{description}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     </article>
 
     <div class="work-projects__grid">
       {projects.map((project, index) => (
         <article class="work-project" data-reveal>
+          <SystemSlot
+            state={`work:${project.shape}`}
+            formation={workFormations[project.shape]}
+            class="work-project__visual"
+          />
+
           <p class="work-project__meta">
             <span>{number(index + 1)}</span>
             <span>{project.type}</span>

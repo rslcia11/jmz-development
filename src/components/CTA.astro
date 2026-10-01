@@ -1,5 +1,7 @@
 ---
-import { contactEmail } from "../data/navigation";
+import { contactFormation } from "../data/formations";
+import { contactEmail, whatsapp } from "../data/navigation";
+import SystemSlot from "./SystemSlot.astro";
 ---
 
 <section class="cta" id="contact" aria-labelledby="cta-title">
@@ -16,10 +18,17 @@ import { contactEmail } from "../data/navigation";
         correcta, te lo diremos.
       </p>
 
-      <p class="cta__direct" data-reveal>
-        ¿Prefieres escribir directo?{" "}
+      <div class="cta__direct" data-reveal>
+        <p>¿Prefieres escribir directo?</p>
+
+        <a class="cta__whatsapp" href={whatsapp.href} target="_blank" rel="noopener noreferrer">
+          WhatsApp <span>{whatsapp.display}</span>
+        </a>
+
         <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-      </p>
+      </div>
+
+      <SystemSlot state="contact" formation={contactFormation} class="section-system cta__system" />
     </div>
 
     <!--

@@ -1,6 +1,6 @@
 # Project Status — JMZ Development & Solutions website
 
-_Last updated: 2026-09-27 — update at the close of any Level 2+ change._
+_Last updated: 2026-10-01 — update at the close of any Level 2+ change._
 
 ## Where we are
 
@@ -9,7 +9,9 @@ page had only one wow moment (the hero), so the design phases 4–10 are being
 rebuilt around **one 3D system that travels the whole page**
 ([ADR 0002](adr/0002-gsap-three-single-scene.md)): Three.js + GSAP, the
 system beside the content (never behind text), moving between sections and
-resting while people read. Phase 1 of that work (3D base + hero) is built and
+resting while people read. Every section's state is now built
+([ADR 0003](adr/0003-system-formations-per-section.md)): hero, Services,
+Understand, Work and Contact, each with its static SVG fallback. All of it is
 awaiting the owner's visual review. SEO is planned ([seo-plan.md](seo-plan.md))
 and parked until there is a domain.
 
@@ -20,11 +22,11 @@ and parked until there is a domain.
 | 1 — Foundation | ✅ done | Tokens, Geist, layout grid, `<main>`, skip link |
 | 2 — Navigation | ✅ done | Sticky header, scroll-spy, `<dialog>` mobile menu, footer |
 | 3 — Hero | 🔄 review | 3D system assembles on entry; SVG fallback |
-| 4 — Understand | ⏳ next | System: disorder → order |
-| 5–6 — Services + Systems | ⏳ pending | System opens into the JMZ map (wow 2), inside Services |
-| 7 — Work (+ Capability) | ⏳ pending | Real projects done; system changes shape per project (wow 3) |
-| 9 — About / Approach | ✅ copy | System rests |
-| 10 — Contact | 🔄 partial | Form shell; system converges by the form; channel deferred |
+| 4 — Understand | 🔄 review | Fragments → modules, scrubbed by the three steps |
+| 5–6 — Services + Systems | 🔄 review | Plan opens into three layers; the one being read lights (wow 2) |
+| 7 — Work (+ Capability) | 🔄 review | A shape per project, hover shows what it does (wow 3) |
+| 9 — About / Approach | ✅ copy | System rests (no slot) |
+| 10 — Contact | 🔄 review | System converges; the form wakes it; channel deferred |
 | 11–14 — Polish, perf, a11y, QA | ⏳ pending | Real-device testing mandatory (ADR 0002) |
 | SEO (§53) | 📋 planned | Implement when the domain exists |
 | 404 (§66) | ⏳ pending | |
@@ -36,36 +38,48 @@ and parked until there is a domain.
 | Motion | One persistent Three.js scene driven by GSAP + ScrollTrigger; reveals in CSS; Anime.js removed | [ADR 0002](adr/0002-gsap-three-single-scene.md) |
 | System rules | Never behind text; moves between sections, rests while reading; no scrolljacking; message first | ADR 0002 |
 | Signature system data | One layout for SVG fallback and 3D | `src/data/system.ts` |
+| Section states | One formation per slot, one renderer; formations are data, fallbacks are projected from them | [ADR 0003](adr/0003-system-formations-per-section.md), `src/data/formations.ts` |
+| Favicon | The system at icon size, core lit | `public/favicon.svg` (+ `.ico`, `apple-touch-icon.png`) |
 | Fonts | Geist + Geist Mono (self-hosted variable woff2) | `src/styles/tokens/typography.css` |
 | Theme / accent | Dark base (`#0b0b0a`), single amber accent (`#d6a56b`); the 3D reads these tokens | `src/styles/tokens/design-tokens.css` |
 | Copy | Hero "Convertimos tu idea en software."; global audience; every headline web-verified as original | [docs/copy.md](copy.md) |
 | Page structure | Six sections (owner); Systems and Capability live inside Services and Work | — |
 | Work section | Real projects only, ERPs without client names | `src/data/projects.ts` |
 | Contact | 4-field form shell (§52); mailto until a provider is chosen | `src/components/CTA.astro` |
+| WhatsApp | +593 96 378 7516: pill in Contact, footer, mobile menu, and a floating shortcut hidden over the hero and Contact | `src/data/navigation.ts`, `WhatsAppButton.astro` |
 | SEO | WebSite + Organization JSON-LD, canonical, OG/X, sitemap, robots | [seo-plan.md](seo-plan.md) |
 
 ## Blocked / pending owner
 
 - Domain (blocks SEO implementation and deploy).
 - "ERP multiempresa" wording — confirm.
-- Real WhatsApp / LinkedIn; contact channel and analytics (§52, §56) — deferred.
+- LinkedIn; form provider and analytics (§52, §56) — deferred. The email
+  works once the domain exists.
+- No testimonials (owner decision). Work shows only projects JMZ can
+  attribute to itself; private client work stays out.
+
+## Pending owner
+
+- Visual review of all five 3D states (desktop and phone).
+- Understand title "Antes del cómo, el para qué." — keep or change.
 
 ## Next steps
 
-1. Owner review of the 3D hero.
-2. Understand: disorder → order.
-3. Services + Systems map.
-4. Work: per-project shapes.
-5. Contact: convergence.
-6. Phases 11–14, 404, SEO, deploy.
+1. Owner review; adjust formations/timings from feedback.
+2. Real-device pass (iOS Safari, mid-range Android): Work grid with several
+   systems on screen, sticky intros, touch emphasis.
+3. Phases 11–14, 404, SEO, deploy.
 
 ## Motion system
 
 - 3D: `src/scripts/system/` — `support` (device check), `palette` (tokens),
-  `build` (objects), `stage` (renderer, on-demand render, slot mapping),
-  `pointer` (system-wide lean), `hero` (section state), `scene` (lazy entry).
-  A new section state is a new file next to `hero`, placed via a
-  `[data-system-slot]` element in that section's visual column.
+  `build` (hero objects), `formation` (any formation), `projection` (rest
+  pose, shared with the SVG fallback), `stage` (renderer, on-demand render,
+  multi-slot mapping), `pointer` (system-wide lean), section states `hero`,
+  `services`, `understand`, `work`, `contact`, and `scene` (lazy entry).
+- A new state: add its formation to `src/data/formations.ts`, drop
+  `<SystemSlot state="…" formation={…} />` into the section's visual column,
+  and add its choreography next to `hero` (wired in `scene.ts`).
 - Scroll reveal: `data-reveal` + tokens in `src/styles/motion.css`; never on
   an element with its own hover transitions (wrap it instead).
 - Hero copy entrance: CSS keyframes, same tokens, no JS.

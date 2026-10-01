@@ -1,0 +1,30 @@
+---
+/*
+  A place in the layout where the 3D system shows up (ADR 0002, 0003). The
+  scene fits the named state onto this box; until it does — or if it never
+  does — the box shows the same formation as a static SVG.
+
+  `state` is "<section>" or "<section>:<variant>" (e.g. "work:store").
+*/
+import type { Formation } from "../data/formations";
+import { formationBounds } from "../scripts/system/projection";
+import SystemFallback from "./SystemFallback.astro";
+
+interface Props {
+  state: string;
+  formation: Formation;
+  class?: string;
+}
+
+const { state, formation, class: className } = Astro.props;
+const { width, height } = formationBounds(formation);
+---
+
+<div
+  class:list={["system-slot", className]}
+  data-system-slot={state}
+  style={`aspect-ratio: ${width.toFixed(3)} / ${height.toFixed(3)}`}
+  aria-hidden="true"
+>
+  <SystemFallback formation={formation} />
+</div>
